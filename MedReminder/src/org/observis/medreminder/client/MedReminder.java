@@ -37,8 +37,6 @@ public class MedReminder implements EntryPoint {
 	DialogBox popupPanel = new DialogBox();
 	MenuBar bar = new MenuBar();
 	private HandlerRegistration closeDialogHandlerReg;
-
-
 	
 	private void setMainStyles(){
 		RootPanel.get().setStyleName("rootPanel");

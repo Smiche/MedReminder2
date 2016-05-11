@@ -1,9 +1,113 @@
 /**
  * The file contains styles for GWT widgets in the dark theme.
  */
-
+body {
+    background-color: #2b3e50;
+}
 body, table td, select {
 	font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: medium;
+    color: #ebebeb;
+}
+h1 {
+  font-size: 2em;
+  font-weight: bold;
+  color: #777777;
+  margin: 40px 0px 70px;
+  text-align: center;
+}
+
+.sendButton {
+  margin: 0 auto; 
+  display: block;
+  font-size: 16pt;
+}
+.loginButton {
+  margin: 0 auto; 
+  display: block;
+  font-size: 16pt;
+}
+.dialogVPanel {
+  margin: 5px;
+}
+
+.serverResponseLabelError {
+  color: red;
+}
+
+.rootPanel{
+}
+
+.patientsPanel{
+	-webkit-box-shadow: 1px 2px 10px -1px rgba(0,0,0,0.64);
+	margin-top:10px;
+	margin-right: 10px;
+    margin-left: 10px;
+    padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+    background-color: #2e3338;
+    border: 1px solid transparent;
+    border-radius: 2px;
+
+}
+.individualPanel{
+	-webkit-box-shadow: 1px 2px 10px -1px rgba(0,0,0,0.64);
+	margin-top:10px;
+	margin-right: 10px;
+    margin-left: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+    background-color: #2e3338;
+    border: 1px solid transparent;
+    border-radius: 2px;
+   
+}
+.deliveriesPanel{
+	-webkit-box-shadow: 1px 2px 10px -1px rgba(0,0,0,0.64);
+	margin-top:10px;
+	margin-right: 10px;
+    margin-left: 10px;
+    padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+    background-color: #2e3338;
+    border: 1px solid transparent;
+    border-radius: 2px;
+}
+
+.messageItemStyle{
+	
+}
+
+.packagePanel{
+	
+}
+#closeButton {
+  margin: 15px 6px 6px;
+}
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: black;
+}
+#table {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: medium;
+    color: #ebebeb;
+    
+}
+body, select, table td{	
+	    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: medium;
     color: #ebebeb;
 }
@@ -18,7 +122,7 @@ body {
   margin: 0px;
   border: 0px;
   padding: 0px;
-  background: #4d4d4d;
+  background: #2b3e50;
   direction: ltr;
 }
 a, a:visited, a:hover {
@@ -36,22 +140,52 @@ a, a:visited, a:hover {
   width: 5px;
   zoom: 1;
 }
+#gwt-uid-3{
+	position: absolute;
+	right: 0px;
+}
+#loginBox{
+	background-color:black;
+	 position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -100px;
+}
+.gwt-DialogBox {
+	-webkit-box-shadow: 1px 2px 10px -1px rgba(0,0,0,0.64);
+	border-radius: 2px;
+	margin-top:10px;
+	margin-right: 10px;
+    margin-left: 10px;
+    padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+    background-color: #2e3338;
+    border: 1px solid transparent;
+    
 
+}
 .gwt-Button {
-  margin: 0;
-  padding: 3px 5px;
+  margin: 2px;
+  padding: 5px 7px;
+  background: #4e5d6c;
   text-decoration: none;
-  font-size: small;
+  font-size: medium;
   cursor: pointer;
   cursor: hand;
-  background: url("images/hborder.png") repeat-x 0px -27px;
-  border: 1px outset #000;
+  color: #ebebeb;
+  border: 1px solid transparent;
+  border-radius: 2px;
+
+ 
 }
 .gwt-Button:active {
-  border: 1px inset #000;
+ 
 }
 .gwt-Button:hover {
-  border: 1px outset #24d3ff;
+  border: 1px outset #F0FD00;
 }
 .gwt-Button[disabled] {
   cursor: default;
@@ -90,59 +224,23 @@ a, a:visited, a:hover {
 }
 
 .gwt-DialogBox .Caption {
-  background: #222222;
-  padding: 4px 4px 4px 8px;
-  color: #00CCFF;
-  cursor: default;
-  border-bottom: 1px solid #888888;
-  border-top: 5px solid #00CCFF;
+	padding: 4px 4px 4px 4px;
+    background-color: #5bc0de;
+    border-color: #3dced8;
+    color: #ffffff;
+  
 }
 .gwt-DialogBox .dialogContent {
 }
-.gwt-DialogBox .dialogMiddleCenter {
-  padding: 3px;
-  background: #666666;
-}
-.gwt-DialogBox .dialogBottomCenter {
-  background: url(images/hborder.png) repeat-x 0px -4px;
-}
-.gwt-DialogBox .dialogMiddleLeft {
-  background: url(images/vborder.png) repeat-y;
-}
-.gwt-DialogBox .dialogMiddleRight {
-  background: url(images/vborder.png) repeat-y -4px 0px;
-}
-.gwt-DialogBox .dialogTopLeftInner {
-  width: 5px;
-  zoom: 1;
-}
-.gwt-DialogBox .dialogTopRightInner {
-  width: 8px;
-  zoom: 1;
-}
-.gwt-DialogBox .dialogBottomLeftInner {
-  width: 5px;
-  height: 8px;
-  zoom: 1;
-}
-.gwt-DialogBox .dialogBottomRightInner {
-  width: 5px;
-  height: 8px;
-  zoom: 1;
-}
-.gwt-DialogBox .dialogTopLeft {
-  background: url(images/corner.png) no-repeat -13px 0px;
-}
-.gwt-DialogBox .dialogTopRight {
-  background: url(images/corner.png) no-repeat -18px 0px;
-}
-.gwt-DialogBox .dialogBottomLeft {
-  background: url(images/corner.png) no-repeat 0px -15px;
-}
-.gwt-DialogBox .dialogBottomRight {
-  background: url(images/corner.png) no-repeat -5px -15px;
-}
 
+.com-google-gwt-user-cellview-client-CellList-Style-cellListSelectedItem{
+	height: 26px;
+    overflow: hidden;
+    background-color: #5bc0de !important;
+    color: white;
+    height: auto;
+    overflow: visible;
+}
 .gwt-DisclosurePanel {
 }
 .gwt-DisclosurePanel-open {
@@ -205,27 +303,33 @@ a, a:visited, a:hover {
 
 .gwt-ListBox {
 }
-
-.gwt-MenuBar {
-  cursor: default;
+ .gwt-MenuBar {
+  padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
-.gwt-MenuBar .gwt-MenuItem {
+.gwt-MenuItem {
   cursor: default;
+  padding: 10px 32px;
 }
 .gwt-MenuBar .gwt-MenuItem-selected {
-  background: #666;
-  color: #0cf;
+  background: #222222;
+  color: #F0FD00;
 }
+.com-google-gwt-user-cellview-client-CellList-Style-cellListKeyboardSelectedItem {
+	
+    background-color: #2e3338 !important;
+	}
 .gwt-MenuBar .gwt-MenuItem-disabled {
   color: #ccc;
 }
 .gwt-MenuBar-horizontal {
   background: #222222;
-  border: 1px solid #777;
+  border: 1px solid transparent;
 }
 .gwt-MenuBar-horizontal .gwt-MenuItem {
-  padding: 0px 10px;
-  vertical-align: bottom;
+  
   font-weight: bold;
 }
 .gwt-MenuBar-horizontal .gwt-MenuItemSeparator {
