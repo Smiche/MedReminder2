@@ -27,7 +27,6 @@ import org.observis.medreminder.shared.FieldVerifier;
  */
 public class MedReminder implements EntryPoint {
 
-
 	private final LoginServiceAsync loginService = GWT
 			.create(LoginService.class);
 	private boolean loggedIn = false;
