@@ -31,6 +31,7 @@ public class MedReminder implements EntryPoint {
 			.create(LoginService.class);
 	private boolean loggedIn = false;
 
+	VerticalPanel loginPanel = new VerticalPanel();
 	PatientHolder patientHolder;
 	PackageHolder packageHolder;
 	
@@ -59,7 +60,7 @@ public class MedReminder implements EntryPoint {
 		// dialogVPanel.add(new HTML("Patient name(optional):"));
 		// dialogVPanel.add(patientNameBox);
 		popupPanel.setText("Info");
-		pan.add(new HTML("<b>" + textToShow + "</b"));
+		pan.add(new HTML("<b>" + textToShow + "</b>"));
 		pan.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
 		pan.add(closeButton);
 		popupPanel.setWidget(pan);
@@ -111,7 +112,6 @@ public class MedReminder implements EntryPoint {
 		bar.addItem("Logout", issueLogout);
 		
 		// main screen
-		final Button sendButton = new Button("Send");
 		final Button loginButton = new Button("Login");
 		final TextBox nameField = new TextBox();
 		nameField.setText("Username");
@@ -120,14 +120,18 @@ public class MedReminder implements EntryPoint {
 		final Label errorLabel = new Label();
 
 		// We can add style names to widgets
-		sendButton.addStyleName("sendButton");
 		loginButton.addStyleName("loginButton");
 		// Add the nameField and sendButton to the RootPanel
 		// Use RootPanel.get() to get the entire body element
-		RootPanel.get("nameFieldContainer").add(nameField);
-		RootPanel.get("passFieldContainer").add(passField);
+		loginPanel.add(nameField);
+		loginPanel.add(passField);
+		loginPanel.add(loginButton);
+		loginPanel.getElement().setAttribute("align", "center");
+		RootPanel.get().add(loginPanel);
+		//RootPanel.get("nameFieldContainer").add(nameField);
+		//RootPanel.get("passFieldContainer").add(passField);
 		// RootPanel.get("sendButtonContainer").add(sendButton);
-		RootPanel.get("loginButtonContainer").add(loginButton);
+		//RootPanel.get("loginButtonContainer").add(loginButton);
 		RootPanel.get("errorLabelContainer").add(errorLabel);
 
 		// Focus the cursor on the name field when the app loads
@@ -158,8 +162,8 @@ public class MedReminder implements EntryPoint {
 		closeButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				dialogBox.hide();
-				sendButton.setEnabled(true);
-				sendButton.setFocus(true);
+				loginButton.setEnabled(true);
+				loginButton.setFocus(true);
 			}
 		});
 
@@ -197,8 +201,8 @@ public class MedReminder implements EntryPoint {
 					patientHolder.initUI();
 				} else {
 					loginBox.hide();
-					sendButton.setEnabled(true);
-					sendButton.setFocus(true);
+					loginButton.setEnabled(true);
+					loginButton.setFocus(true);
 				}
 			}
 		});
@@ -236,7 +240,7 @@ public class MedReminder implements EntryPoint {
 				}
 
 				// Then, we send the input to the server.
-				sendButton.setEnabled(false);
+				loginButton.setEnabled(false);
 				serverResponseLabel.setText("");
 				loginService.logIn(user, pass, new AsyncCallback<Boolean>() {
 					public void onFailure(Throwable caught) {
@@ -253,9 +257,7 @@ public class MedReminder implements EntryPoint {
 						if (authenticated) {
 							loginResponse.setText("Login successful.");
 							loginBox.center();
-							RootPanel.get("nameFieldContainer").clear();
-							RootPanel.get("passFieldContainer").clear();
-							RootPanel.get("loginButtonContainer").clear();
+							RootPanel.get().remove(loginPanel);
 							RootPanel.get("menuBar").add(bar);
 							patientHolder.loadPatients();
 							loggedIn = true;

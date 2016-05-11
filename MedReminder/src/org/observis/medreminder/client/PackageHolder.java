@@ -49,6 +49,9 @@ public class PackageHolder extends HorizontalPanel{
 	
 	public PackageHolder(){
 		
+		packagesListPanel.setStyleName("individualPanel");
+		packagesMiddlePanel.setStyleName("individualPanel");
+		
 		addPackage.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -90,6 +93,7 @@ public class PackageHolder extends HorizontalPanel{
 	}
 	
 	private void addPackagePopup(){
+		
 		// Create the popup dialog box
 		addPackageBox.setText("Add a package.");
 		addPackageBox.setAnimationEnabled(true);
