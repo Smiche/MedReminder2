@@ -1,0 +1,99 @@
+/** Add css rules here for your application. */
+
+
+/** Example rules used by the template application (remove for your app) */
+h1 {
+  font-size: 2em;
+  font-weight: bold;
+  color: #777777;
+  margin: 40px 0px 70px;
+  text-align: center;
+}
+
+.sendButton {
+  margin: 0 auto; 
+  display: block;
+  font-size: 16pt;
+}
+.loginButton {
+  margin: 0 auto; 
+  display: block;
+  font-size: 16pt;
+}
+
+
+/** Most GWT widgets already have a style name defined */
+.gwt-DialogBox {
+  width: 400px;
+}
+
+.dialogVPanel {
+  margin: 5px;
+}
+
+.serverResponseLabelError {
+  color: red;
+}
+
+.rootPanel{
+}
+
+.individualPanel{
+	border-radius: 15px 15px 15px 15px;
+-moz-border-radius: 15px 15px 15px 15px;
+-webkit-border-radius: 15px 15px 15px 15px;
+border: 4px solid #009933;
+    margin-top: 0px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+.patientsPanel{
+	border-radius: 15px 15px 15px 15px;
+-moz-border-radius: 15px 15px 15px 15px;
+-webkit-border-radius: 15px 15px 15px 15px;
+border: 4px solid #6699ff;
+    margin-top: 0px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    margin-left: 0px;
+}
+.deliveriesPanel{
+	border-radius: 15px 15px 15px 15px;
+-moz-border-radius: 15px 15px 15px 15px;
+-webkit-border-radius: 15px 15px 15px 15px;
+border: 4px solid #660066;
+    margin-top: 0px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+.messageItemStyle{
+	
+}
+
+.packagePanel{
+	
+}
+
+/** Set ids using widget.getElement().setId("idOfElement") */
+#closeButton {
+  margin: 15px 6px 6px;
+}
+#table {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: medium;
+    color: #ebebeb;
+    
+}
+body, select, table td{	
+	    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: medium;
+    color: #ebebeb;
+}
