@@ -28,7 +28,7 @@ h1 {
   font-size: 16pt;
 }
 .dialogVPanel {
-  margin: 5px;
+	
 }
 
 .serverResponseLabelError {
@@ -152,6 +152,9 @@ a, a:visited, a:hover {
   margin-top: -50px;
   margin-left: -100px;
 }
+#closeButton.gwt-button{
+	float:right;
+}
 .gwt-DialogBox {
 	-webkit-box-shadow: 1px 2px 10px -1px rgba(0,0,0,0.64);
 	border-radius: 2px;
@@ -164,17 +167,57 @@ a, a:visited, a:hover {
 	padding-right: 10px;
     background-color: #2e3338;
     border: 1px solid transparent;
-    
+     -webkit-box-shadow: 0px 0px 4px #4195fc;
+       -moz-box-shadow: 0px 0px 4px #4195fc;
+            box-shadow: 0px 0px 4px #4195fc;
+                clip: initial !important;
 
 }
+.gwt-Button.loginButton{
+	float: right;
+}
+.usernameLabel{
+	float: left;
+	
+}
+.namePanel{
+	width: 16em;
+	margin-botton: 0.2em;	
+}
+.passPanel{
+	margin-top: 0.2em;	
+	width: 16em;
+}
+.passwordPanel{
+	float: left;
+}
 .passField{
-	 position: relative;
-    width: 99%;
+	float: right;
+	border-radius: 3px;
+	-webkit-appearance: caret;
+
 }
 .nameField{
-	 margin-left: 32px;
-    position: relative;
-    width: 83%;
+	float: right;
+	border-radius: 3px;
+	-webkit-appearance: caret;
+	color: grey;
+  
+}
+.passField:focus{
+	
+	     -webkit-box-shadow: 0px 0px 4px #4195fc;
+	       -moz-box-shadow: 0px 0px 4px #4195fc;
+	            box-shadow: 0px 0px 4px #4195fc;
+	            color:black;
+
+}
+.nameField:focus{
+	
+    -webkit-box-shadow: 0px 0px 4px #4195fc;
+       -moz-box-shadow: 0px 0px 4px #4195fc;
+            box-shadow: 0px 0px 4px #4195fc;
+            color: black;
 }
 .loginBox{
 	-webkit-box-shadow: 1px 2px 10px -1px rgba(0,0,0,0.64);
