@@ -21,7 +21,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 	}
 	
 	@Override
-	public boolean logIn(String username, String password) throws IllegalArgumentException {
+	public String logIn(String username, String password) throws IllegalArgumentException {
 		if (DatabaseConnector.checkLogin(username, password)){
 			UUID sessionID = UUID.randomUUID();
 	        HttpServletRequest httpServletRequest = this.getThreadLocalRequest();
@@ -30,10 +30,10 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 	        session.setAttribute("sid", sessionID);
 	        getThreadLocalRequest().getSession().setMaxInactiveInterval(10000);
 			System.out.println("Successful login. SID: "+sessionID);	
-			return true;
+			return sessionID.toString();
 		}else{
 			loggedIn = false;
-			return false;
+			return "invalid";
 		}
 	}
 

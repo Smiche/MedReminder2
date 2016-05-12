@@ -46,7 +46,7 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public String getPatients() throws IllegalArgumentException {
-
+		if(isLegalUser())return "";
 		HttpServletRequest httpServletRequest = this.getThreadLocalRequest();
 		HttpSession session = httpServletRequest.getSession(true);
 		String doctorName = (String) session.getAttribute("user");

@@ -13,6 +13,7 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -270,7 +271,7 @@ public class MedReminder implements EntryPoint {
 				// Then, we send the input to the server.
 				loginButton.setEnabled(false);
 				serverResponseLabel.setText("");
-				loginService.logIn(user, pass, new AsyncCallback<Boolean>() {
+				loginService.logIn(user, pass, new AsyncCallback<String>() {
 					public void onFailure(Throwable caught) {
 						// Show the RPC error message to the user
 						dialogBox.setText("Remote Procedure Call - Failure");
@@ -281,8 +282,9 @@ public class MedReminder implements EntryPoint {
 						closeButton.setFocus(true);
 					}
 
-					public void onSuccess(Boolean authenticated) {
-						if (authenticated) {
+					public void onSuccess(String authenticated) {
+						Cookies.setCookie("sid",""+ authenticated);
+						if (!authenticated.equalsIgnoreCase("invalid")) {
 							loginResponse.setText("Login successful.");
 							loginBox.center();
 							RootPanel.get().remove(loginPanel);
