@@ -42,6 +42,10 @@ public class MedReminder implements EntryPoint {
 	PatientHolder patientHolder;
 	PackageHolder packageHolder;
 	
+	
+	String text;
+	DialogBox loginBox;
+	Button loginButton;
 	DialogBox popupPanel = new DialogBox();
 	MenuBar bar = new MenuBar();
 	private HandlerRegistration closeDialogHandlerReg;
@@ -88,7 +92,7 @@ public class MedReminder implements EntryPoint {
 	   // final ValidatorFactory factory = Validation.byDefaultProvider().configure().buildValidatorFactory();
 	    //final Validator validator = factory.getValidator();
 		String sid = Cookies.getCookie("sid");
-		Window.alert("Session cookie is: "+sid);
+		
 		patientHolder = new PatientHolder();
 		packageHolder = new PackageHolder();
 		
@@ -99,7 +103,61 @@ public class MedReminder implements EntryPoint {
 
 			@Override
 			public void execute() {
-				// loginService.logout();
+				 loginService.logOut(new AsyncCallback<Void>(){
+
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void onSuccess(Void result) {
+						RootPanel.get().clear();
+						RootPanel.get("mainPanel").clear();
+						loginButton.setEnabled(true);
+						RootPanel.get().add(loginPanel);
+						loginBox = new DialogBox();
+						loginBox.setText("RPC Login");
+						loginBox.setAnimationEnabled(true);
+						final Button closeLoginBox = new Button("Close");
+						// We can set the id of a widget by accessing its Element
+						closeLoginBox.getElement().setId("closeLoginBox");
+						// final Label loginDetails = new Label();
+						final HTML loginResponse = new HTML();
+						VerticalPanel dialogLoginPanel = new VerticalPanel();
+						dialogLoginPanel.addStyleName("dialogVPanel");
+						dialogLoginPanel.add(new HTML("<b>Sending name to the server:</b>"));
+						dialogLoginPanel.add(new HTML("<br><b>Server replies:</b>"));
+						dialogLoginPanel.add(loginResponse);
+						dialogLoginPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
+						dialogLoginPanel.add(closeLoginBox);
+						
+						loginBox.setWidget(dialogLoginPanel);
+						
+						closeLoginBox.addClickHandler(new ClickHandler() {
+							public void onClick(ClickEvent event) {
+								if (loggedIn) {
+									RootPanel.get("nameFieldContainer").clear();
+									RootPanel.get("passFieldContainer").clear();
+									// RootPanel.get("sendButtonContainer").clear();
+									RootPanel.get("loginButtonContainer").clear();
+									RootPanel.get("errorLabelContainer").clear();
+									//RootPanel.get().clear();
+									loginBox.clear();
+									loginBox.hide();
+									patientHolder.initUI();
+								} else {
+									loginBox.hide();
+									loginButton.setEnabled(true);
+									loginButton.setFocus(true);
+								}
+							}
+						});
+						
+					}
+					 
+				 });
 			}
 
 		};
@@ -144,7 +202,7 @@ public class MedReminder implements EntryPoint {
 		
 		
 		//
-		final Button loginButton = new Button("Login");
+		loginButton = new Button("Login");
 		final TextBox nameField = new TextBox();
 		nameField.setText("Username");
 		final PasswordTextBox passField = new PasswordTextBox();
@@ -219,7 +277,7 @@ public class MedReminder implements EntryPoint {
 		});
 
 		// Create the popup dialog box
-		final DialogBox loginBox = new DialogBox();
+		loginBox = new DialogBox();
 		loginBox.setText("RPC Login");
 		loginBox.setAnimationEnabled(true);
 		final Button closeLoginBox = new Button("Close");

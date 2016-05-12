@@ -39,6 +39,13 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 	}
 
 	@Override
+	public void logOut(){
+		HttpServletRequest servReq = this.getThreadLocalRequest();
+		HttpSession session = servReq.getSession(true);
+		session.removeAttribute("sid");		
+	}
+	
+	@Override
 	public Integer getUserSessionTimeout() {
 		timeout = getThreadLocalRequest().getSession().getMaxInactiveInterval() * 1000;
 		return timeout;
