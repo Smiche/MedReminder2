@@ -1,5 +1,9 @@
 package org.observis.medreminder.client;
 
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -79,6 +83,9 @@ public class MedReminder implements EntryPoint {
 
 
 	public void onModuleLoad() {
+	    final ValidatorFactory factory = Validation.byDefaultProvider().configure().buildValidatorFactory();
+	    final Validator validator = factory.getValidator();
+		
 		patientHolder = new PatientHolder();
 		packageHolder = new PackageHolder();
 		
