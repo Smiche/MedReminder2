@@ -136,9 +136,11 @@ public class MedReminder implements EntryPoint {
 		
 		usernamePanel.add(usernameLabel);
 		usernamePanel.add(nameField);
+		usernamePanel.setStyleName("namePanel");
 		
 		passwordPanel.add(passwordLabel);
 		passwordPanel.add(passField);
+		passwordPanel.setStyleName("passPanel");
 		
 		nameField.setStyleName("nameField");
 		passField.setStyleName("passField");
