@@ -246,7 +246,7 @@ public class PatientHolder extends HorizontalPanel{
 		final Button editClick = new Button("Save");
 		final Button removeButton = new Button("Remove");
 		// We can set the id of a widget by accessing its Element
-		closeButton.getElement().setId("closeButton");
+		//closeButton.getElement().setId("closeButton");
 		VerticalPanel dialogVPanel = new VerticalPanel();
 		//+phoneBox.setText("+358");
 		
@@ -261,11 +261,15 @@ public class PatientHolder extends HorizontalPanel{
 		dialogVPanel.add(deliveryTimeBox);
 		dialogVPanel.add(new HTML("Delivery text:"));
 		dialogVPanel.add(deliveryTextBox);
-		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
 		
-		dialogVPanel.add(editClick);
-		dialogVPanel.add(removeButton);
-		dialogVPanel.add(closeButton);
+		HorizontalPanel buttonPan = new HorizontalPanel();
+		buttonPan.setStyleName("buttonPanel");
+		
+		buttonPan.add(removeButton);
+		buttonPan.add(closeButton);
+		buttonPan.add(editClick);
+
+		dialogVPanel.add(buttonPan);
 		editDeliveryBox.setWidget(dialogVPanel);
 		editDeliveryBox.center();
 		// Add a handler to close the DialogBox
@@ -348,8 +352,14 @@ public class PatientHolder extends HorizontalPanel{
 		addPatientBox.setAnimationEnabled(true);
 		final Button closeButton = new Button("Close");
 		final Button addClick = new Button("Add");
+		addClick.addStyleName("addPatientButton");
+		closeButton.addStyleName("closePatientPopup");
+		//addClick.setStyleName("addPatientButton");
 		// We can set the id of a widget by accessing its Element
-		closeButton.getElement().setId("closeButton");
+		HorizontalPanel buttonPanel = new HorizontalPanel();
+		buttonPanel.add(closeButton);
+		buttonPanel.add(addClick);
+		
 		VerticalPanel dialogVPanel = new VerticalPanel();
 		phoneBox.setText("+358");
 
@@ -359,8 +369,7 @@ public class PatientHolder extends HorizontalPanel{
 		dialogVPanel.add(new HTML("Patient name(optional):"));
 		dialogVPanel.add(patientNameBox);
 		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
-		dialogVPanel.add(addClick);
-		dialogVPanel.add(closeButton);
+		dialogVPanel.add(buttonPanel);
 		addPatientBox.setWidget(dialogVPanel);
 		addPatientBox.center();
 		// Add a handler to close the DialogBox
