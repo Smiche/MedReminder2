@@ -163,7 +163,6 @@ public class PatientHolder extends HorizontalPanel{
 										selectedDelivery = selected;
 										openDeliveryPopup();
 										deliveriesSelectionModel.setSelected(selected, false);
-										
 									}
 								}
 							});
@@ -228,6 +227,7 @@ public class PatientHolder extends HorizontalPanel{
 					@Override
 					public void onSuccess(String result) {
 						showDialog("Succesfully scheduled: " + result);
+						updateMiddlePanel();
 					}
 				});
 	}
