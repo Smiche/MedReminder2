@@ -2,6 +2,7 @@ package org.observis.medreminder.server;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,10 +19,31 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 	/**
 	 * 
 	 */
+	private Boolean isLegalUser(){
+		HttpServletRequest req = this.getThreadLocalRequest();
+		HttpSession session = req.getSession(true);
+		Long lastAccessed = session.getLastAccessedTime();
+		Long curTime = System.currentTimeMillis();
+		Long inactiveTime = curTime-lastAccessed;
+		System.out.println("Last used: "+lastAccessed+" Inactive for: "+(curTime-lastAccessed));
+		
+		if(inactiveTime>session.getMaxInactiveInterval()){
+			session.removeAttribute("sid");
+			return false;
+		}
+		Object sidObj = session.getAttribute("sid");
+		if(sidObj!=null && sidObj instanceof UUID){
+			return true;
+		}		
+		
 
+		return false;
+	}
+	
 	@Override
 	public String addPatient(String name, String phone)
 			throws IllegalArgumentException {
+		if(!isLegalUser())return "";
 		HttpServletRequest httpServletRequest = this.getThreadLocalRequest();
 		HttpSession session = httpServletRequest.getSession(true);
 		String username = (String) session.getAttribute("user");
@@ -35,7 +57,7 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public String getPatients() throws IllegalArgumentException {
-
+		if(!isLegalUser())return "";
 		HttpServletRequest httpServletRequest = this.getThreadLocalRequest();
 		HttpSession session = httpServletRequest.getSession(true);
 		String doctorName = (String) session.getAttribute("user");
@@ -49,7 +71,7 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 	// client getting template t
 	public ArrayList<Message> getPackage(String description)
 			throws IllegalArgumentException {
-
+		if(!isLegalUser()) return null;
 		// array list to return all messages
 		return DatabaseConnector.getSinglePackage(description);
 		// hook to db connector
@@ -65,7 +87,7 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public String getPackagesList() throws IllegalArgumentException {
-
+		if(!isLegalUser())return "";
 
 		// need to change to getPackagesList
 		// return DatabaseConnector.getTemplatesList();
@@ -76,6 +98,7 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public String scheduleMessages(ArrayList<Message> messages,
 			String patientPhone) throws IllegalArgumentException {
+		if(!isLegalUser())return "";
 		// TODO Auto-generated method stub
 		System.out.println("Array size: "+messages.size());
 		int success = 0;
