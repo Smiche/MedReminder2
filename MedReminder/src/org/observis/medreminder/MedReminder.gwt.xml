@@ -19,7 +19,6 @@
   <!--  <stylesheet src='../MedReminder.css' /> -->
   <!-- Specify the app entry point class.                         -->
   <entry-point class='org.observis.medreminder.client.MedReminder'/>
-
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>
   <source path='shared'/>
