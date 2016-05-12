@@ -255,11 +255,11 @@ public class PatientHolder extends HorizontalPanel {
 		deliveryTextBox.setText(cur.text);
 
 		dialogVPanel.addStyleName("dialogVPanel");
-		dialogVPanel.add(new HTML("Delivery date:"));
+		dialogVPanel.add(new HTML("Date <i>(i.e. 11-01-2016)</i>:"));
 		dialogVPanel.add(deliveryDateBox);
-		dialogVPanel.add(new HTML("Delivery time:"));
+		dialogVPanel.add(new HTML("Time <i>(i.e. 11:20)</i>:"));
 		dialogVPanel.add(deliveryTimeBox);
-		dialogVPanel.add(new HTML("Delivery text:"));
+		dialogVPanel.add(new HTML("Text:"));
 		dialogVPanel.add(deliveryTextBox);
 
 		HorizontalPanel buttonPan = new HorizontalPanel();
@@ -352,9 +352,7 @@ public class PatientHolder extends HorizontalPanel {
 					deliveryTextBox.setText("");
 
 					// end of succesfull validation
-				} else {
-					Window.alert("WRONG AGAIN");
-				}
+				} 
 			}
 		});
 	}
@@ -377,7 +375,7 @@ public class PatientHolder extends HorizontalPanel {
 		phoneBox.setText("+358");
 
 		dialogVPanel.addStyleName("dialogVPanel");
-		dialogVPanel.add(new HTML("<b>*Patient Phone number:</b>"));
+		dialogVPanel.add(new HTML("<b>*Patient Phone number <i>(i.e. +358...)</i>:</b>"));
 		dialogVPanel.add(phoneBox);
 		dialogVPanel.add(new HTML("Patient name(optional):"));
 		dialogVPanel.add(patientNameBox);
@@ -415,9 +413,7 @@ public class PatientHolder extends HorizontalPanel {
 					addPatientBox.hide();
 					phoneBox.setText("+358");
 					patientNameBox.setText("");
-				} else {
-					Window.alert("Invalid data!");
-				}
+				} 
 			}
 
 		});
@@ -444,12 +440,12 @@ public class PatientHolder extends HorizontalPanel {
 		dialogVPanel.add(messageTitleBox);
 		dialogVPanel.add(new HTML("<b>*Text:</b>"));
 		dialogVPanel.add(messageTextBox);
-		dialogVPanel.add(new HTML("<b>*Day:</b>"));
+		dialogVPanel.add(new HTML("<b>*Day <i>(i.e. 1-7)</i>:</b>"));
 		dialogVPanel.add(messageDayBox);
 		dialogVPanel.add(new HTML("<b>*Time:</b>"));
-		dialogVPanel.add(new HTML("Hour"));
+		dialogVPanel.add(new HTML("Hour <i>(i.e. 0-23)</i>:"));
 		dialogVPanel.add(messageHourBox);
-		dialogVPanel.add(new HTML("Minute"));
+		dialogVPanel.add(new HTML("Minute <i>(i.e. 0-59)</i>:"));
 		dialogVPanel.add(messageMinuteBox);
 
 		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
@@ -526,9 +522,7 @@ public class PatientHolder extends HorizontalPanel {
 					messageDayBox.setText("");
 					messageHourBox.setText("");
 					messageMinuteBox.setText("");
-				} else {
-					Window.alert("INVALID!!!");
-				}
+				} 
 			}
 
 		});

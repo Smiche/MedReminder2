@@ -139,9 +139,7 @@ public class PackageHolder extends HorizontalPanel {
 					});
 					addPackageBox.hide();
 					packageNameBox.setText("");
-				} else {
-					Window.alert("INVALID");
-				}
+				} 
 			}
 
 		});
@@ -167,12 +165,12 @@ public class PackageHolder extends HorizontalPanel {
 		dialogVPanel.add(messageTitleBox);
 		dialogVPanel.add(new HTML("<b>*Text:</b>"));
 		dialogVPanel.add(messageTextBox);
-		dialogVPanel.add(new HTML("<b>*Day:</b>"));
+		dialogVPanel.add(new HTML("<b>*Day <i>(i.e. 1-7)</i>:</b>"));
 		dialogVPanel.add(messageDayBox);
 		dialogVPanel.add(new HTML("<b>*Time:</b>"));
-		dialogVPanel.add(new HTML("Hour"));
+		dialogVPanel.add(new HTML("Hour <i>(i.e. 0-23)</i>:"));
 		dialogVPanel.add(messageHourBox);
-		dialogVPanel.add(new HTML("Minute"));
+		dialogVPanel.add(new HTML("Minute <i>(i.e. 0-59)</i>:"));
 		dialogVPanel.add(messageMinuteBox);
 
 		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
@@ -223,9 +221,7 @@ public class PackageHolder extends HorizontalPanel {
 					messageDayBox.setText("");
 					messageHourBox.setText("");
 					messageMinuteBox.setText("");
-				} else {
-					Window.alert("INVALID");
-				}
+				} 
 			}
 
 		});
