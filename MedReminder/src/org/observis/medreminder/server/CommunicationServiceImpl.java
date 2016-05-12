@@ -25,7 +25,6 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 		Long lastAccessed = session.getLastAccessedTime();
 		Long curTime = System.currentTimeMillis();
 		Long inactiveTime = curTime-lastAccessed;
-		System.out.println("Last used: "+lastAccessed+" Inactive for: "+(curTime-lastAccessed) +" SID:"+((UUID)session.getAttribute("sid")).toString());
 		
 		if(inactiveTime>session.getMaxInactiveInterval()){
 			session.removeAttribute("sid");
@@ -113,6 +112,7 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public void addPackage(String name) throws IllegalArgumentException {
+		if(!isLegalUser())return;
 		// add a new package to the database with that title ->name
 		DatabaseConnector.addPackagetoDB(name);
 		
@@ -121,6 +121,7 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public void addMessage(Message msg, String packageName)
 			throws IllegalArgumentException {
+		if(!isLegalUser())return;
 		DatabaseConnector.addMessagetoDB(msg, packageName);
 		//add a new message to table messages
 		//use packageName to get foreign  package_id
@@ -130,6 +131,7 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public void removeMessage(String title, String text)
 			throws IllegalArgumentException {
+		if(!isLegalUser())return;
 		DatabaseConnector.removeMessageDB(title, text);
 		// TODO Auto-generated method stub
 		
@@ -137,6 +139,7 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public void removePackage(String title) throws IllegalArgumentException {
+		if(!isLegalUser())return;
 		// TODO Auto-generated method stub 
 		DatabaseConnector.removePackageDB(title);
 		
@@ -145,12 +148,14 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public ArrayList<Delivery> getDeliveries(String phone)
 			throws IllegalArgumentException {
+		if(!isLegalUser())return null;
 		// TODO Auto-generated method stub
 		return DatabaseConnector.returnDeliveryDB(phone);
 	}
 
 	@Override
 	public void removePatient(String phone) throws IllegalArgumentException {
+		if(!isLegalUser())return;
 		// TODO Auto-generated method stub
 		DatabaseConnector.removePatientDB(phone);
 		
@@ -159,6 +164,7 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public void removeDelivery(Delivery chosenDelivery)
 			throws IllegalArgumentException {
+		if(!isLegalUser())return;
 		DatabaseConnector.removeDeliveryDB(chosenDelivery);
 		// use chosenDelivery.date and chosenDelivery.time to select the delivery that needs to be removed
 		
@@ -167,6 +173,7 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public void addDelivery(Delivery delivery, String phone)
 			throws IllegalArgumentException {
+		if(!isLegalUser())return;
 		// delivery.date delivery.text delivery.time and get patient id with phone
 		DatabaseConnector.addDeliveryDB(delivery, phone);
 	}
@@ -174,6 +181,7 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public void editDelivery(Delivery oldDelivery, Delivery changedDelivery)
 			throws IllegalArgumentException {
+		if(!isLegalUser())return;
 		DatabaseConnector.updateDeliveryDB(oldDelivery, changedDelivery);
 		// find old delivery with oldDelivery.time and oldDelivery.date and change all field values that u get from changedDelivery
 		

@@ -61,8 +61,6 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 			sidStr = sidObj.toString();
 		}	
 		
-		System.out.println("Session tested: "+sid +" Actual session stored: "+sidStr);
-		
 		if(sidStr.equals(sid)){
 			return true;
 		}
