@@ -375,7 +375,7 @@ public class PatientHolder extends HorizontalPanel {
 		phoneBox.setText("+358");
 
 		dialogVPanel.addStyleName("dialogVPanel");
-		dialogVPanel.add(new HTML("<b>*Patient Phone number <i>(i.e. +358...)</i>:</b>"));
+		dialogVPanel.add(new HTML("*Patient Phone number <i>(i.e. +358...)</i>:"));
 		dialogVPanel.add(phoneBox);
 		dialogVPanel.add(new HTML("Patient name(optional):"));
 		dialogVPanel.add(patientNameBox);
