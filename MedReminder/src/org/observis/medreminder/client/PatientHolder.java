@@ -319,7 +319,6 @@ public class PatientHolder extends HorizontalPanel{
 			@Override
 			public void onClick(ClickEvent event) {
 				Window.alert("Invalid input!");
-				if(3>4){
 				
 				//on validation:
 				Delivery toEdit = null;
@@ -348,7 +347,7 @@ public class PatientHolder extends HorizontalPanel{
 				deliveryTimeBox.setText("");
 				deliveryTextBox.setText("");
 			
-				}
+				
 			//end of succesfull validation 
 			}
 
@@ -393,6 +392,8 @@ public class PatientHolder extends HorizontalPanel{
 
 			@Override
 			public void onClick(ClickEvent event) {
+				if(FieldVerifier.isValidPhone(phoneBox.getText())){
+				
 				comService.addPatient(patientNameBox.getText(),
 						phoneBox.getText(), new AsyncCallback<String>() {
 
@@ -410,6 +411,9 @@ public class PatientHolder extends HorizontalPanel{
 				addPatientBox.hide();
 				phoneBox.setText("+358");
 				patientNameBox.setText("");
+			}else{
+			Window.alert("Invalid data!");
+			}
 			}
 
 		});
@@ -462,9 +466,10 @@ public class PatientHolder extends HorizontalPanel{
 			}
 		});
 		addClick.addClickHandler(new ClickHandler() {
-
+				
 			@Override
 			public void onClick(ClickEvent event) {
+				if(FieldVerifier.isValidText(messageTextBox.getText()) && FieldVerifier.isValidHour(messageHourBox.getText()) && FieldVerifier.isValidMinute(messageMinuteBox.getText())&& FieldVerifier.isValidDay(messageDayBox.getText()) && FieldVerifier.isValidText(messageTitleBox.getText())){
 				//
 				VerticalPanel newMsg = new VerticalPanel();
 				
@@ -515,8 +520,11 @@ public class PatientHolder extends HorizontalPanel{
 				messageDayBox.setText("");
 				messageHourBox.setText("");
 				messageMinuteBox.setText("");
+			}else{
+				Window.alert("INVALID!!!");
 			}
-
+			}
+			
 		});
 		
 	}

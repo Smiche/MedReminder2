@@ -47,7 +47,7 @@ public class FieldVerifier {
 		return pass.length() > 3;
 	}
 	public static boolean isValidText(String text){
-		if(text.length()<1 && text.length()>200){
+		if(text.length()<1 || text.length()>200){
 			return false;
 		} else {
 			return true;
@@ -70,6 +70,44 @@ public class FieldVerifier {
 			}
 		}
 		return true;
+	}
+	public static boolean isValidPhone(String phone){
+		String pluslessPhone = phone.replaceAll("\\+", "");
+		String regex = "[0-9]+";
+		if(phone!=null && pluslessPhone.matches(regex) &&pluslessPhone.length()==12 && phone.startsWith("+")){
+			return true;
+		}
+			return false;
+			
+		
+	}
+	public static boolean isValidDay(String day){
+		String regex = "[0-9]+";
+		Integer dayNum = Integer.parseInt(day);
+		if(day.matches(regex) && dayNum<8){
+			return true;
+		}else{
+		return false;
+		}
+	}
+	public static boolean isValidHour(String hour){
+		String regex = "[0-9]+";
+		Integer hourNum = Integer.parseInt(hour);
+		if(hour.matches(regex) && hourNum<25){
+			return true;
+		}else{
+		return false;
+		}
+		
+	}
+	public static boolean isValidMinute(String minute){
+		String regex = "[0-9]+";
+		Integer minNum = Integer.parseInt(minute);
+		if(minute.matches(regex) && minNum<61){
+			return true;
+		}else{
+		return false;
+		}
 	}
 	
 }
