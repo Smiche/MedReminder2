@@ -1,5 +1,9 @@
 package org.observis.medreminder.shared;
 
+import java.util.ArrayList;
+
+import com.gargoylesoftware.htmlunit.javascript.host.Window;
+
 /**
  * <p>
  * FieldVerifier validates that the name the user enters is valid.
@@ -55,14 +59,21 @@ public class FieldVerifier {
 		
 	}
 	public static boolean isValidDate(String date){
+		
 		String[] toTest;
 		toTest = date.split("-");
+		String regex = "[0-9]+";
+		String pureDate = date.replace("-", "");
+
+		if(!pureDate.matches(regex)){
+		return false;
+		}
 		if(toTest.length!=3){
 			return false;
 		}
-		Integer[] nums = null;
+		ArrayList<Integer> nums = new ArrayList<Integer>();
 		for(int i=0;i<3;i++){
-			nums[i] = Integer.parseInt(toTest[i]);
+			nums.add(Integer.parseInt(toTest[i]));
 		}
 		for(Integer n:nums){
 			if(n==null){
@@ -78,8 +89,30 @@ public class FieldVerifier {
 			return true;
 		}
 			return false;
-			
+	}
+	public static boolean isValidTime(String time){
 		
+		String[] toTest;
+		toTest = time.split(":");
+		String pureTime = time.replace(":", "");
+		String regex = "[0-9]+";
+		if(!pureTime.matches(regex)){
+			return false;
+			
+		}
+		if(toTest.length!=2){
+			return false;
+		}
+		ArrayList<Integer> nums = new ArrayList<Integer>();
+		for(int i = 0;i<2;i++){
+			nums.add(Integer.parseInt(toTest[i]));
+		}
+		for(Integer n:nums){
+			if(n==null){
+				return false;
+			}
+			
+		}return true;
 	}
 	public static boolean isValidDay(String day){
 		String regex = "[0-9]+";
@@ -109,5 +142,6 @@ public class FieldVerifier {
 		return false;
 		}
 	}
+	
 	
 }

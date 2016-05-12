@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.observis.medreminder.shared.FieldVerifier;
+
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -124,6 +126,7 @@ public class PackageHolder extends HorizontalPanel{
 
 			@Override
 			public void onClick(ClickEvent event) {
+				if(FieldVerifier.isValidText(packageNameBox.getText())){
 				comService.addPackage(packageNameBox.getText(), new AsyncCallback<Void>() {
 
 							@Override
@@ -140,7 +143,11 @@ public class PackageHolder extends HorizontalPanel{
 				addPackageBox.hide();
 				packageNameBox.setText("");
 			}
-
+				else{
+					Window.alert("INVALID");
+				}
+			}
+			
 		});
 	}
 	
@@ -193,6 +200,11 @@ public class PackageHolder extends HorizontalPanel{
 
 			@Override
 			public void onClick(ClickEvent event) {
+				if (FieldVerifier.isValidText(messageTextBox.getText())
+						&& FieldVerifier.isValidHour(messageHourBox.getText())
+						&& FieldVerifier.isValidMinute(messageMinuteBox.getText())
+						&& FieldVerifier.isValidDay(messageDayBox.getText())
+						&& FieldVerifier.isValidText(messageTitleBox.getText())) {
 				Message m = new Message(messageTitleBox.getText(), messageTextBox.getText(), messageHourBox.getText()+":"+messageMinuteBox.getText(), messageDayBox.getText());
 				
 				comService.addMessage(m,selectedPackage, new AsyncCallback<Void>() {
@@ -215,6 +227,10 @@ public class PackageHolder extends HorizontalPanel{
 				messageDayBox.setText("");
 				messageHourBox.setText("");
 				messageMinuteBox.setText("");
+			}
+				else{
+					Window.alert("INVALID");
+				}
 			}
 
 		});
