@@ -207,7 +207,14 @@ public class PatientHolder extends HorizontalPanel {
 			}
 			data.add(new Message(title, txt, h + ":" + m, dayVal));
 		}
-
+		for(Message curMsg:data){
+			if(!(FieldVerifier.isValidText(curMsg.text)&&FieldVerifier.isValidTime(curMsg.time))){
+				Window.alert("INVALID");
+				return;
+			}
+			
+		}
+		
 		comService.scheduleMessages(data, selectedPatient, new AsyncCallback<String>() {
 
 			@Override
@@ -720,6 +727,7 @@ public class PatientHolder extends HorizontalPanel {
 		submitData.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+
 				submitTask();
 			}
 
