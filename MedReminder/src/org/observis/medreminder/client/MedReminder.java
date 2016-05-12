@@ -13,6 +13,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.PasswordTextBox;
@@ -124,10 +125,24 @@ public class MedReminder implements EntryPoint {
 		loginButton.addStyleName("loginButton");
 		// Add the nameField and sendButton to the RootPanel
 		// Use RootPanel.get() to get the entire body element
-		loginPanel.add(nameField);
-		loginPanel.add(passField);
+		final HorizontalPanel usernamePanel = new HorizontalPanel();
+		final HorizontalPanel passwordPanel = new HorizontalPanel();
+		
+		final Label usernameLabel = new Label("Login:");
+		usernameLabel.setStyleName("usernameLabel");
+		
+		final Label passwordLabel = new Label("Password:");
+		passwordLabel.setStyleName("passwordLabel");
+		
+		usernamePanel.add(usernameLabel);
+		usernamePanel.add(nameField);
+		
+		passwordPanel.add(passwordLabel);
+		passwordPanel.add(passField);
+		
+		loginPanel.add(usernamePanel);
+		loginPanel.add(passwordPanel);
 		loginPanel.add(loginButton);
-		loginPanel.getElement().setAttribute("align", "center");
 		RootPanel.get().add(loginPanel);
 		//RootPanel.get("nameFieldContainer").add(nameField);
 		//RootPanel.get("passFieldContainer").add(passField);
