@@ -83,8 +83,8 @@ public class MedReminder implements EntryPoint {
 
 
 	public void onModuleLoad() {
-	    final ValidatorFactory factory = Validation.byDefaultProvider().configure().buildValidatorFactory();
-	    final Validator validator = factory.getValidator();
+	   // final ValidatorFactory factory = Validation.byDefaultProvider().configure().buildValidatorFactory();
+	    //final Validator validator = factory.getValidator();
 		
 		patientHolder = new PatientHolder();
 		packageHolder = new PackageHolder();
