@@ -242,13 +242,13 @@ public class DatabaseConnector {
 	public static ArrayList<Message> getSinglePackage(String title) {
 		openConnection();
 		ArrayList<Message> messageList = new ArrayList<Message>();
-		System.out.println("Getting package: "+title+" List: "+messageList.size());
 		String sqlSelect = "SELECT messages.id, messages.title, messages.time, messages.day, messages.text FROM packages Left join messages ON packages.id = messages.package_id WHERE packages.title LIKE '"+title+"' ORDER BY day, time";
 		ResultSet rs = null;
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlSelect);
 			while (rs.next()) {
+				if(rs.getString("title")!= null && rs.getString("text") !=null && rs.getString("time")!=null && rs.getString("day")!=null)
 				messageList.add(new Message(rs.getString("title"),rs.getString("text"),rs.getString("time"),rs.getString("day")));
 			}
 
@@ -257,7 +257,6 @@ public class DatabaseConnector {
 			e.printStackTrace();
 		}
 		closeConnection();
-		System.out.println("Size now is: "+messageList.size());
 		return messageList;
 	}
 	

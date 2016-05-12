@@ -162,7 +162,6 @@ public class PatientHolder extends HorizontalPanel{
 									if (selected != null) {
 										selectedDelivery = selected;
 										openDeliveryPopup();
-										deliveriesSelectionModel.setSelected(selected, false);
 									}
 								}
 							});
@@ -263,6 +262,7 @@ public class PatientHolder extends HorizontalPanel{
 		dialogVPanel.add(new HTML("Delivery text:"));
 		dialogVPanel.add(deliveryTextBox);
 		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
+		
 		dialogVPanel.add(editClick);
 		dialogVPanel.add(removeButton);
 		dialogVPanel.add(closeButton);
@@ -275,6 +275,7 @@ public class PatientHolder extends HorizontalPanel{
 				deliveryDateBox.setText("");
 				deliveryTimeBox.setText("");
 				deliveryTextBox.setText("");
+				deliveriesSelectionModel.setSelected(selectedDelivery, false);
 			}
 		});
 		
