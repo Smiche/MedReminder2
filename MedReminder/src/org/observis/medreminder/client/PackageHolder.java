@@ -89,8 +89,6 @@ public class PackageHolder extends HorizontalPanel {
 			}
 
 		});
-
-		this.initPackageHolder();
 	}
 
 	private void addPackagePopup() {
@@ -335,7 +333,7 @@ public class PackageHolder extends HorizontalPanel {
 		});
 	}
 
-	private void initPackageHolder() {
+	void initPackageHolder() {
 		comService.getPackagesList(new AsyncCallback<String>() {
 
 			@Override

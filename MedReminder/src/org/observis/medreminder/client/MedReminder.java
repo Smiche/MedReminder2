@@ -92,7 +92,6 @@ public class MedReminder implements EntryPoint {
 		patientHolder = new PatientHolder();
 		packageHolder = new PackageHolder();
 		
-		
 		//initPackageHolder();
 		setMainStyles();
 
@@ -115,6 +114,7 @@ public class MedReminder implements EntryPoint {
 			@Override
 			public void execute() {
 				RootPanel.get("mainPanel").remove(patientHolder);
+				packageHolder.initPackageHolder();
 				RootPanel.get("mainPanel").add(packageHolder);				
 			}
 		};
