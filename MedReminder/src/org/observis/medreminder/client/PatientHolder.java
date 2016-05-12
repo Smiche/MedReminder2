@@ -46,6 +46,8 @@ public class PatientHolder extends HorizontalPanel{
 	private TextBox deliveryDateBox = new TextBox();
 	private TextBox deliveryTimeBox = new TextBox();
 	
+	SingleSelectionModel<String> deliveriesSelectionModel;
+	
 	private VerticalPanel patientsPanel = new VerticalPanel();
 	private ListBox packagesList = new ListBox();
 	private DialogBox addPatientBox = new DialogBox();
@@ -151,15 +153,17 @@ public class PatientHolder extends HorizontalPanel{
 					CellList<String> deliveriesCellList = new CellList<String>(deliveryCell);
 					// cellList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 
-					final SingleSelectionModel<String> selectionModel = new SingleSelectionModel<String>();
-					deliveriesCellList.setSelectionModel(selectionModel);
-					selectionModel
+					deliveriesSelectionModel = new SingleSelectionModel<String>();
+					deliveriesCellList.setSelectionModel(deliveriesSelectionModel);
+					deliveriesSelectionModel
 							.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 								public void onSelectionChange(SelectionChangeEvent event) {
-									String selected = selectionModel.getSelectedObject();
+									String selected = deliveriesSelectionModel.getSelectedObject();
 									if (selected != null) {
 										selectedDelivery = selected;
 										openDeliveryPopup();
+										deliveriesSelectionModel.setSelected(selected, false);
+										
 									}
 								}
 							});
