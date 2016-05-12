@@ -54,8 +54,16 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 	public Boolean isUserInSession(String sid){
 		HttpServletRequest req = this.getThreadLocalRequest();
 		HttpSession session = req.getSession(true);
-		Object sidObj = session.getAttribute("sid");
+	
+		UUID sidObj = (UUID) session.getAttribute("sid");
+		String sidStr = "";
 		if(sidObj!=null && sidObj instanceof UUID){
+			sidStr = sidObj.toString();
+		}	
+		
+		System.out.println("Session tested: "+sid +" Actual session stored: "+sidStr);
+		
+		if(sidStr.equals(sid)){
 			return true;
 		}
 		return false;

@@ -25,7 +25,7 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 		Long lastAccessed = session.getLastAccessedTime();
 		Long curTime = System.currentTimeMillis();
 		Long inactiveTime = curTime-lastAccessed;
-		System.out.println("Last used: "+lastAccessed+" Inactive for: "+(curTime-lastAccessed));
+		System.out.println("Last used: "+lastAccessed+" Inactive for: "+(curTime-lastAccessed) +" SID:"+((UUID)session.getAttribute("sid")).toString());
 		
 		if(inactiveTime>session.getMaxInactiveInterval()){
 			session.removeAttribute("sid");

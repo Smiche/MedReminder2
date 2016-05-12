@@ -124,6 +124,26 @@ public class MedReminder implements EntryPoint {
 		bar.addItem("Logout", issueLogout);
 		
 		// main screen
+		loginService.isUserInSession(Cookies.getCookie("sid"), new AsyncCallback<Boolean>(){
+
+			@Override
+			public void onFailure(Throwable caught) {				
+			}
+
+			@Override
+			public void onSuccess(Boolean result) {
+				//Cookies.setCookie("sid",authenticated);
+				if(result){
+				RootPanel.get().remove(loginPanel);
+				RootPanel.get("menuBar").add(bar);
+				patientHolder.loadPatients();
+				loggedIn = true;
+				}
+				}		
+		});
+		
+		
+		//
 		final Button loginButton = new Button("Login");
 		final TextBox nameField = new TextBox();
 		nameField.setText("Username");
