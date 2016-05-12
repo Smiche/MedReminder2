@@ -46,4 +46,30 @@ public class FieldVerifier {
 		}
 		return pass.length() > 3;
 	}
+	public static boolean isValidText(String text){
+		if(text.length()<1 && text.length()>200){
+			return false;
+		} else {
+			return true;
+		}
+		
+	}
+	public static boolean isValidDate(String date){
+		String[] toTest;
+		toTest = date.split("-");
+		if(toTest.length!=3){
+			return false;
+		}
+		Integer[] nums = null;
+		for(int i=0;i<3;i++){
+			nums[i] = Integer.parseInt(toTest[i]);
+		}
+		for(Integer n:nums){
+			if(n==null){
+				return false;
+			}
+		}
+		return true;
+	}
+	
 }

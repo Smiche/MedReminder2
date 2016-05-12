@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.observis.medreminder.shared.FieldVerifier;
+
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -316,6 +318,10 @@ public class PatientHolder extends HorizontalPanel{
 
 			@Override
 			public void onClick(ClickEvent event) {
+				Window.alert("Invalid input!");
+				if(3>4){
+				
+				//on validation:
 				Delivery toEdit = null;
 				for(Delivery d:deliveries){
 					if(selectedDelivery.equals(d.date +" "+d.time)){
@@ -341,6 +347,9 @@ public class PatientHolder extends HorizontalPanel{
 				deliveryDateBox.setText("");
 				deliveryTimeBox.setText("");
 				deliveryTextBox.setText("");
+			
+				}
+			//end of succesfull validation 
 			}
 
 		});
