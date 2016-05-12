@@ -40,6 +40,7 @@ public class MedReminder implements EntryPoint {
 	private HandlerRegistration closeDialogHandlerReg;
 	
 	private void setMainStyles(){
+		loginPanel.setStyleName("loginBox");
 		RootPanel.get().setStyleName("rootPanel");
 	}
 
