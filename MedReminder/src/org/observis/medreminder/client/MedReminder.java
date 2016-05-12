@@ -14,6 +14,7 @@ import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -86,7 +87,8 @@ public class MedReminder implements EntryPoint {
 	public void onModuleLoad() {
 	   // final ValidatorFactory factory = Validation.byDefaultProvider().configure().buildValidatorFactory();
 	    //final Validator validator = factory.getValidator();
-		
+		String sid = Cookies.getCookie("sid");
+		Window.alert("Session cookie is: "+sid);
 		patientHolder = new PatientHolder();
 		packageHolder = new PackageHolder();
 		
@@ -283,8 +285,9 @@ public class MedReminder implements EntryPoint {
 					}
 
 					public void onSuccess(String authenticated) {
-						Cookies.setCookie("sid",""+ authenticated);
+
 						if (!authenticated.equalsIgnoreCase("invalid")) {
+							Cookies.setCookie("sid",authenticated);
 							loginResponse.setText("Login successful.");
 							loginBox.center();
 							RootPanel.get().remove(loginPanel);

@@ -11,4 +11,5 @@ public interface LoginService extends RemoteService{
 	void ping();
 	boolean checkLoggedIn() throws IllegalArgumentException;
 	String logIn(String username, String password) throws IllegalArgumentException;
+	Boolean isUserInSession(String sid);
 }

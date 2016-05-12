@@ -28,6 +28,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 	        HttpSession session = httpServletRequest.getSession(true);
 	        session.setAttribute("user", username);
 	        session.setAttribute("sid", sessionID);
+	        session.setMaxInactiveInterval(900000);
 	        getThreadLocalRequest().getSession().setMaxInactiveInterval(10000);
 			System.out.println("Successful login. SID: "+sessionID);	
 			return sessionID.toString();
@@ -49,7 +50,8 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 				(System.currentTimeMillis() - getThreadLocalRequest().getSession().getLastAccessedTime()) < timeout);
 	}
 	
-	private Boolean isUserInSession(String sid){
+	@Override
+	public Boolean isUserInSession(String sid){
 		HttpServletRequest req = this.getThreadLocalRequest();
 		HttpSession session = req.getSession(true);
 		Object sidObj = session.getAttribute("sid");
