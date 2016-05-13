@@ -110,21 +110,23 @@ public class DatabaseConnector {
 		ResultSet rs = null;
 		openConnection();
 		String doctorID = "";
+		PreparedStatement getDoctorID;
+		PreparedStatement addPatientSQL;
 		try {
+			getDoctorID = conn.prepareStatement("SELECT doctor_id FROM doctors WHERE username LIKE ?");
+			getDoctorID.setString(1, username);
 			stmt = conn.createStatement();
-			String getDoctorId = "SELECT doctor_id FROM doctors WHERE username LIKE '" + username + "'";
 			// get doctor_id from doctors database to find patients numbers for
 			// this exact doctor
-			rs = stmt.executeQuery(getDoctorId);
+			rs = getDoctorID.executeQuery();
 			while (rs.next()) {
 				doctorID = rs.getString("doctor_id");
 			}
-			// System.out.println(doctorID);
-			String addPatientSQL = "INSERT INTO patients (doctor_id, number) VALUES ('" + doctorID + "','" + phone
-					+ "')";
-			// Using the same string variable to execute another SQL statement
-			stmt.execute(addPatientSQL);
-			// new patient record created
+			addPatientSQL = conn.prepareStatement("INSERT INTO patients (doctor_id, number) VALUES (?,?)");
+			addPatientSQL.setString(1, doctorID);
+			addPatientSQL.setString(2, phone);
+			addPatientSQL.executeUpdate();
+			//new patient added
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
