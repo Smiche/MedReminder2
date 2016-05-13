@@ -302,12 +302,15 @@ public class DatabaseConnector {
 	public static void addMessagetoDB(Message msg, String package_title){
 		openConnection();
 		String package_id = "";
-		String sqlSelect = "SELECT id FROM packages WHERE title LIKE '"+package_title+"'";
+		PreparedStatement sqlSelect;
+		PreparedStatement sqlInsert;
 		ResultSet rs = null;
 	
 		try {
+			sqlSelect = conn.prepareStatement("SELECT id FROM packages WHERE title LIKE ?");
+			sqlSelect.setString(1, package_title);
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery(sqlSelect);
+			rs = sqlSelect.executeQuery();
 			while(rs.next()){
 				package_id = rs.getString("id");
 			}
@@ -316,10 +319,17 @@ public class DatabaseConnector {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String sqlInsert = "INSERT INTO messages(title,text,time,day,package_id) VALUES ('"+msg.title+"', '"+msg.text+"', '"+msg.time+"','"+msg.day+"','"+package_id+"')";
+		
+		
 		try {
+			sqlInsert = conn.prepareStatement("INSERT INTO messages(title,text,time,day,package_id) VALUES (?,?,?,?,?)");
+			sqlInsert.setString(1, msg.title);
+			sqlInsert.setString(2, msg.text);
+			sqlInsert.setString(3, msg.time);
+			sqlInsert.setString(4, msg.day);
+			sqlInsert.setString(5, package_id);
 			stmt = conn.createStatement();
-			stmt.executeUpdate(sqlInsert);
+			sqlInsert.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
