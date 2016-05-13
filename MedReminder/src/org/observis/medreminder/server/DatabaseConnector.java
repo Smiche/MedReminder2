@@ -628,6 +628,7 @@ public class DatabaseConnector {
 	}
 	public static void removeAllDeliveryDB(String phone){
 		openConnection();
+		
 		String patient_id = "";
 		PreparedStatement sqlSelect;
 		PreparedStatement sqlDelete;
@@ -654,7 +655,6 @@ public class DatabaseConnector {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		
 		closeConnection();
 	}
