@@ -238,11 +238,12 @@ public class DatabaseConnector {
 	public static String getPackagesDB() {
 		openConnection();
 		String packageList = "";
-		String sqlQuery = "SELECT title FROM packages ORDER BY title";
+		PreparedStatement sqlQuery;
 		ResultSet rs = null;
 		try {
+			sqlQuery = conn.prepareStatement("SELECT title FROM packages ORDER BY title");
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery(sqlQuery);
+			rs = sqlQuery.executeQuery();
 			while (rs.next()) {
 				if (packageList.length() < 2) {
 					packageList += rs.getString("title");
