@@ -488,12 +488,12 @@ public class DatabaseConnector {
 		rs = null;
 		
 		try {
-			sqlSelectDelivery = conn.prepareStatement("SELECT delivery_id FROM delivery WHERE patient_id = ? AND text = ? AND date = ? AND time = ? AND sent ?");
+			sqlSelectDelivery = conn.prepareStatement("SELECT delivery_id FROM delivery WHERE patient_id = ? AND text = ? AND date = ? AND time = ? ");
 			sqlSelectDelivery.setString(1, patient_id);
 			sqlSelectDelivery.setString(2, chosenDelivery.text);
 			sqlSelectDelivery.setString(3, chosenDelivery.date);
 			sqlSelectDelivery.setString(4, chosenDelivery.time);
-			sqlSelectDelivery.setString(5, chosenDelivery.sent);
+			//sqlSelectDelivery.setString(5, chosenDelivery.sent);
 			stmt = conn.createStatement();
 			rs = sqlSelectDelivery.executeQuery();
 			while(rs.next()){
