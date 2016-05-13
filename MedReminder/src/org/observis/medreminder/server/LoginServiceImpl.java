@@ -1,5 +1,4 @@
 package org.observis.medreminder.server;
-import java.sql.*;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +12,6 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 
 	private static final long serialVersionUID = 109090909L;
 	private int timeout;
-	private boolean loggedIn = false;
 	@Override
 	public boolean checkLoggedIn() throws IllegalArgumentException {
 		// TODO Auto-generated method stub
@@ -33,7 +31,6 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 			System.out.println("Successful login. SID: "+sessionID);	
 			return sessionID.toString();
 		}else{
-			loggedIn = false;
 			return "invalid";
 		}
 	}
