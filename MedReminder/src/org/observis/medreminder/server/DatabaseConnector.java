@@ -263,11 +263,13 @@ public class DatabaseConnector {
 	public static ArrayList<Message> getSinglePackage(String title) {
 		openConnection();
 		ArrayList<Message> messageList = new ArrayList<Message>();
-		String sqlSelect = "SELECT messages.id, messages.title, messages.time, messages.day, messages.text FROM packages Left join messages ON packages.id = messages.package_id WHERE packages.title LIKE '"+title+"' ORDER BY day, time";
+		PreparedStatement sqlSelect;
 		ResultSet rs = null;
 		try {
+			sqlSelect = conn.prepareStatement("SELECT messages.id, messages.title, messages.time, messages.day, messages.text FROM packages Left join messages ON packages.id = messages.package_id WHERE packages.title LIKE ? ORDER BY day, time");
+			sqlSelect.setString(1, title);
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery(sqlSelect);
+			rs = sqlSelect.executeQuery();
 			while (rs.next()) {
 				if(rs.getString("title")!= null && rs.getString("text") !=null && rs.getString("time")!=null && rs.getString("day")!=null)
 				messageList.add(new Message(rs.getString("title"),rs.getString("text"),rs.getString("time"),rs.getString("day")));
