@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.observis.medreminder.shared.FieldVerifier;
 
+import com.google.gwt.cell.client.ClickableTextCell;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -25,6 +26,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.NoSelectionModel;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 
@@ -64,6 +66,7 @@ public class PatientHolder extends HorizontalPanel {
 	private String[] patientString;
 	private String[] packagesListString;
 	private String medValue = "";
+	private String selectedPackage = "";
 	private String selectedPatient = "";
 	private String selectedDelivery = "";
 
@@ -120,7 +123,8 @@ public class PatientHolder extends HorizontalPanel {
 		packagesList.addChangeHandler(new ChangeHandler() {
 			@Override
 			public void onChange(ChangeEvent event) {
-				loadPackage(packagesList.getSelectedItemText());
+				selectedPackage = packagesList.getSelectedItemText();
+				loadPackage(selectedPackage);
 			}
 		});
 	}
@@ -167,9 +171,8 @@ public class PatientHolder extends HorizontalPanel {
 					// patientsPanel = new VerticalPanel();
 					deliveriesPanel.add(deliveriesCellList);
 					deliveriesPanel.add(removeAllDeliveries);
-
 				}
-
+				loadPackage(selectedPackage);
 			}
 
 		});
@@ -535,7 +538,7 @@ public class PatientHolder extends HorizontalPanel {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	void loadPatients() {
 		comService.getPatients(new AsyncCallback() {
-
+			
 			@Override
 			public void onFailure(Throwable caught) {
 				Window.alert("Unable to fetch patients.");
@@ -562,13 +565,14 @@ public class PatientHolder extends HorizontalPanel {
 		CellList<String> cellList = new CellList<String>(patientsCell);
 		// cellList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 		cellList.setStyleName("cellList");
-
+		
 		final SingleSelectionModel<String> selectionModel = new SingleSelectionModel<String>();
 		cellList.setSelectionModel(selectionModel);
 		selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 			public void onSelectionChange(SelectionChangeEvent event) {
 				String selected = selectionModel.getSelectedObject();
 				if (selected != null) {
+					selectionModel.getSelectedSet().clear();
 					selectedPatient = selected;
 					updateMiddlePanel();
 				}
@@ -608,7 +612,6 @@ public class PatientHolder extends HorizontalPanel {
 				}
 				if (sel != null)
 					packagesList.setSelectedIndex(sel);
-
 				updatePatientDeliveries();
 			}
 		});
@@ -616,7 +619,7 @@ public class PatientHolder extends HorizontalPanel {
 
 	@SuppressWarnings("unused")
 	private void loadPackage(String packageName) {
-
+		if(!packageName.equals(""))
 		// interface to get template
 		comService.getPackage(packageName, new AsyncCallback<ArrayList<Message>>() {
 
@@ -675,7 +678,6 @@ public class PatientHolder extends HorizontalPanel {
 				}
 				packagePanel.add(createCustomMessage);
 				individualPanel.add(packagePanel);
-
 			}
 
 		});
