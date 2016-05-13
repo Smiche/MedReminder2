@@ -29,7 +29,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 	        session.setAttribute("user", username);
 	        session.setAttribute("sid", sessionID);
 	        session.setMaxInactiveInterval(900000);
-	        getThreadLocalRequest().getSession().setMaxInactiveInterval(10000);
+	        //getThreadLocalRequest().getSession().setMaxInactiveInterval(10000);
 			System.out.println("Successful login. SID: "+sessionID);	
 			return sessionID.toString();
 		}else{

@@ -98,18 +98,23 @@ public class PackageHolder extends HorizontalPanel {
 		addPackageBox.setAnimationEnabled(true);
 		final Button closeButton = new Button("Close");
 		final Button addClick = new Button("Add");
+		addClick.addStyleName("addPatientButton");
+		closeButton.addStyleName("closePatientPopup");		
 		// We can set the id of a widget by accessing its Element
 		closeButton.getElement().setId("closeButton");
 		VerticalPanel dialogVPanel = new VerticalPanel();
 		packageNameBox.setText("");
 
+		HorizontalPanel buttonPanel = new HorizontalPanel();
+		buttonPanel.add(closeButton);
+		buttonPanel.add(addClick);
+		
 		dialogVPanel.addStyleName("dialogVPanel");
 		dialogVPanel.add(new HTML("<b>*Package name:</b>"));
 		dialogVPanel.add(packageNameBox);
 
 		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
-		dialogVPanel.add(addClick);
-		dialogVPanel.add(closeButton);
+		dialogVPanel.add(buttonPanel);
 		addPackageBox.setWidget(dialogVPanel);
 		addPackageBox.center();
 		// Add a handler to close the DialogBox
@@ -151,6 +156,13 @@ public class PackageHolder extends HorizontalPanel {
 		createMessageBox.setAnimationEnabled(true);
 		final Button closeButton = new Button("Close");
 		final Button addClick = new Button("Add");
+		addClick.addStyleName("addPatientButton");
+		closeButton.addStyleName("closePatientPopup");
+		
+		HorizontalPanel buttonPanel = new HorizontalPanel();
+		buttonPanel.add(closeButton);
+		buttonPanel.add(addClick);
+		
 		// We can set the id of a widget by accessing its Element
 		closeButton.getElement().setId("closeButton");
 		VerticalPanel dialogVPanel = new VerticalPanel();
@@ -174,8 +186,7 @@ public class PackageHolder extends HorizontalPanel {
 		dialogVPanel.add(messageMinuteBox);
 
 		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
-		dialogVPanel.add(addClick);
-		dialogVPanel.add(closeButton);
+		dialogVPanel.add(buttonPanel);
 		createMessageBox.setWidget(dialogVPanel);
 		createMessageBox.center();
 		// Add a handler to close the DialogBox

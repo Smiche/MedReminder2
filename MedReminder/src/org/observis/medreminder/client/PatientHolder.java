@@ -426,6 +426,8 @@ public class PatientHolder extends HorizontalPanel {
 		createCustomMessageBox.setAnimationEnabled(true);
 		final Button closeButton = new Button("Close");
 		final Button addClick = new Button("Add");
+		addClick.addStyleName("addPatientButton");
+		closeButton.addStyleName("closePatientPopup");
 		// We can set the id of a widget by accessing its Element
 		closeButton.getElement().setId("closeButton");
 		VerticalPanel dialogVPanel = new VerticalPanel();
@@ -435,6 +437,9 @@ public class PatientHolder extends HorizontalPanel {
 		messageHourBox.setText("");
 		messageMinuteBox.setText("");
 
+		HorizontalPanel buttonPanel = new HorizontalPanel();
+		buttonPanel.add(closeButton);
+		buttonPanel.add(addClick);
 		dialogVPanel.addStyleName("dialogVPanel");
 		dialogVPanel.add(new HTML("<b>*Title:</b>"));
 		dialogVPanel.add(messageTitleBox);
@@ -448,9 +453,8 @@ public class PatientHolder extends HorizontalPanel {
 		dialogVPanel.add(new HTML("Minute <i>(i.e. 0-59)</i>:"));
 		dialogVPanel.add(messageMinuteBox);
 
-		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
-		dialogVPanel.add(addClick);
-		dialogVPanel.add(closeButton);
+		//dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
+		dialogVPanel.add(buttonPanel);;
 		createCustomMessageBox.setWidget(dialogVPanel);
 		createCustomMessageBox.center();
 		// Add a handler to close the DialogBox
