@@ -285,10 +285,12 @@ public class DatabaseConnector {
 	
 	public static void addPackagetoDB(String title){
 		openConnection();
-		String sqlInsert = "INSERT INTO packages (title) VALUES ('"+title+"')";
+		PreparedStatement sqlInsert;
 		try {
+			sqlInsert = conn.prepareStatement("INSERT INTO packages (title) VALUES (?)");
+			sqlInsert.setString(1, title);
 			stmt = conn.createStatement();
-			stmt.execute(sqlInsert);
+			sqlInsert.executeUpdate();
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
