@@ -11,8 +11,9 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -22,7 +23,6 @@ public class MyPanel extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = -6766331239529509003L;
-	private Thread checker;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JPasswordField passwordField;
@@ -37,6 +37,21 @@ public class MyPanel extends JFrame {
 	private boolean isInterruptable = false;
 
 	public static void main(String... args) {
+				try {
+					UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InstantiationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (UnsupportedLookAndFeelException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				MyPanel startPoint = new MyPanel();
 				startPoint.setVisible(true);
 	}
