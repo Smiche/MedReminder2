@@ -187,4 +187,11 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 		
 	}
 
+	@Override
+	public void removeAllDeliveries(String phone)
+			throws IllegalArgumentException {
+		if(!isLegalUser())return;
+		DatabaseConnector.removeAllDeliveryDB(phone);		
+	}
+
 }
