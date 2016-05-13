@@ -2,6 +2,9 @@ package org.observis.medreminder.shared;
 
 import java.util.ArrayList;
 
+import org.observis.medreminder.client.Delivery;
+import org.observis.medreminder.client.Message;
+
 import com.gargoylesoftware.htmlunit.javascript.host.Window;
 
 /**
@@ -143,5 +146,15 @@ public class FieldVerifier {
 		}
 	}
 	
+	public static boolean isValidMessage(Message msg){
+		if(msg== null || !FieldVerifier.isValidDay(msg.day) || !FieldVerifier.isValidTime(msg.time) || !FieldVerifier.isValidText(msg.title) || !FieldVerifier.isValidText(msg.text))
+		return false;
+		
+		return true;
+	}
+	
+	public static boolean isValidDelivery(Delivery del){
+		return false;
+	}
 	
 }

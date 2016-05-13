@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.observis.medreminder.client.CommunicationService;
 import org.observis.medreminder.client.Delivery;
 import org.observis.medreminder.client.Message;
+import org.observis.medreminder.shared.FieldVerifier;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -48,6 +49,7 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 	public String addPatient(String name, String phone)
 			throws IllegalArgumentException {
 		if(!isLegalUser())return "";
+		if(!FieldVerifier.isValidPhone(phone) || !FieldVerifier.isValidText(name))return "";
 		HttpServletRequest httpServletRequest = this.getThreadLocalRequest();
 		HttpSession session = httpServletRequest.getSession(true);
 		String username = (String) session.getAttribute("user");
@@ -76,6 +78,7 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 	public ArrayList<Message> getPackage(String description)
 			throws IllegalArgumentException {
 		if(!isLegalUser()) return null;
+		if(!FieldVerifier.isValidText(description))return null;
 		// array list to return all messages
 		return DatabaseConnector.getSinglePackage(description);
 		// hook to db connector
@@ -103,6 +106,12 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 	public String scheduleMessages(ArrayList<Message> messages,
 			String patientPhone) throws IllegalArgumentException {
 		if(!isLegalUser())return "";
+		for(Message msg:messages){
+			if(!FieldVerifier.isValidMessage(msg)){
+				return "";
+			}
+		}
+		
 		// TODO Auto-generated method stub
 		System.out.println("Array size: "+messages.size());
 		int success = 0;
@@ -127,6 +136,7 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 	public void addMessage(Message msg, String packageName)
 			throws IllegalArgumentException {
 		if(!isLegalUser())return;
+		if(!FieldVerifier.isValidMessage(msg) || !FieldVerifier.isValidText(packageName))return;
 		DatabaseConnector.addMessagetoDB(msg, packageName);
 		//add a new message to table messages
 		//use packageName to get foreign  package_id
@@ -137,6 +147,7 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 	public void removeMessage(String title, String text)
 			throws IllegalArgumentException {
 		if(!isLegalUser())return;
+		if(!FieldVerifier.isValidText(title) || !FieldVerifier.isValidText(text))return;
 		DatabaseConnector.removeMessageDB(title, text);
 		// TODO Auto-generated method stub
 		
@@ -145,6 +156,7 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public void removePackage(String title) throws IllegalArgumentException {
 		if(!isLegalUser())return;
+		if(!FieldVerifier.isValidText(title))return;
 		// TODO Auto-generated method stub 
 		DatabaseConnector.removePackageDB(title);
 		
@@ -154,6 +166,7 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 	public ArrayList<Delivery> getDeliveries(String phone)
 			throws IllegalArgumentException {
 		if(!isLegalUser())return null;
+		if(!FieldVerifier.isValidPhone(phone))return null;
 		// TODO Auto-generated method stub
 		return DatabaseConnector.returnDeliveryDB(phone);
 	}
@@ -161,6 +174,7 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public void removePatient(String phone) throws IllegalArgumentException {
 		if(!isLegalUser())return;
+		if(!FieldVerifier.isValidPhone(phone))return;
 		// TODO Auto-generated method stub
 		DatabaseConnector.removePatientDB(phone);
 		
@@ -196,6 +210,7 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 	public void removeAllDeliveries(String phone)
 			throws IllegalArgumentException {
 		if(!isLegalUser())return;
+		if(!FieldVerifier.isValidPhone(phone))return;
 		DatabaseConnector.removeAllDeliveryDB(phone);		
 	}
 
