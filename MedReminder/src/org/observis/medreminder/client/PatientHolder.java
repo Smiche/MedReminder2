@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.observis.medreminder.shared.FieldVerifier;
 
-import com.google.gwt.cell.client.ClickableTextCell;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -26,7 +25,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.view.client.NoSelectionModel;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 
@@ -589,7 +587,6 @@ public class PatientHolder extends HorizontalPanel {
 
 	}
 
-	@SuppressWarnings("unused")
 	private void requestPackagesList() {
 		comService.getPackagesList(new AsyncCallback<String>() {
 
@@ -617,7 +614,6 @@ public class PatientHolder extends HorizontalPanel {
 		});
 	}
 
-	@SuppressWarnings("unused")
 	private void loadPackage(String packageName) {
 		if(!packageName.equals(""))
 		// interface to get template
