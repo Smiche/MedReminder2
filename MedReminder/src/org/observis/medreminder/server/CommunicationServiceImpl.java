@@ -19,6 +19,11 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = -8777697465243592882L;
+
+	/**
+	 * 
+	 */
 	private Boolean isLegalUser(){
 		HttpServletRequest req = this.getThreadLocalRequest();
 		HttpSession session = req.getSession(true);
