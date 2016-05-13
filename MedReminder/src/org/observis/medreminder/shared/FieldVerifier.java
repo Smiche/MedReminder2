@@ -154,7 +154,14 @@ public class FieldVerifier {
 	}
 	
 	public static boolean isValidDelivery(Delivery del){
-		return false;
+		if(del == null){
+			return false;
+		}
+		if(!FieldVerifier.isValidDate(del.date) || !FieldVerifier.isValidTime(del.time) || !FieldVerifier.isValidPhone(del.patientPhone) || !FieldVerifier.isValidText(del.text)){
+			return false;
+		}
+		
+		return true;
 	}
 	
 }
