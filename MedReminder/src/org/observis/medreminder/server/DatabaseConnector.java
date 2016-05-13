@@ -299,6 +299,7 @@ public class DatabaseConnector {
 		closeConnection();
 	
 	}
+
 	public static void addMessagetoDB(Message msg, String package_title){
 		openConnection();
 		String package_id = "";
@@ -336,24 +337,31 @@ public class DatabaseConnector {
 		}
 		closeConnection();
 	}
+	
 	public static void removeMessageDB (String title, String text){
 		openConnection();
-		String sqlRemove = "DELETE FROM messages WHERE title = '"+title+"' AND text = '"+text+"'";
+		PreparedStatement sqlRemove;
 		try {
+			sqlRemove = conn.prepareStatement("DELETE FROM messages WHERE title = ? AND text = ?");
+			sqlRemove.setString(1, title);
+			sqlRemove.setString(2,text);
 			stmt = conn.createStatement();
-			stmt.executeUpdate(sqlRemove);
+			sqlRemove.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		closeConnection();
 		}
+	
 	public static void removePackageDB (String title){
 		openConnection();
-		String sqlRemove = "DELETE FROM packages WHERE title = '"+title+"'";
+		PreparedStatement sqlRemove;
 		try {
+			sqlRemove = conn.prepareStatement("DELETE FROM packages WHERE title = ?");
+			sqlRemove.setString(1, title);
 			stmt = conn.createStatement();
-			stmt.executeUpdate(sqlRemove);
+			sqlRemove.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -361,12 +369,21 @@ public class DatabaseConnector {
 		closeConnection();
 		
 	}
+	
 	public static void updateMessageDB (String oldTitle, String newTitle, String newText, String newTime, String newDay){
 		openConnection();
-		String sqlUpdate = "UPDATE messages SET title='"+newTitle+"',text='"+newText+"', time ='"+newTime+"', day ='"+newDay+"' WHERE title LIKE '"+oldTitle+"'";
+		PreparedStatement sqlUpdate;
+		
 		try {
+			sqlUpdate = conn.prepareStatement("UPDATE messages SET title = (?, ?, ?, ?) WHERE title LIKE ?");
+			sqlUpdate.setString(1, newTitle);
+			sqlUpdate.setString(2, newText);
+			sqlUpdate.setString(3, newTime);
+			sqlUpdate.setString(4, newDay);
+			sqlUpdate.setString(5, oldTitle);
+			
 			stmt = conn.createStatement();
-			stmt.executeUpdate(sqlUpdate);
+			sqlUpdate.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
