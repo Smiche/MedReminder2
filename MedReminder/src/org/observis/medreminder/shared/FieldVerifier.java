@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import org.observis.medreminder.client.Delivery;
 import org.observis.medreminder.client.Message;
 
-import com.gargoylesoftware.htmlunit.javascript.host.Window;
-
 /**
  * <p>
  * FieldVerifier validates that the name the user enters is valid.

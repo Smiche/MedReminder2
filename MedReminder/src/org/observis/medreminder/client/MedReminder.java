@@ -51,6 +51,7 @@ public class MedReminder implements EntryPoint {
 	}
 
 
+	@SuppressWarnings("unused")
 	private void showDialog(String textToShow) {
 		// addPatientBox.setText("Add a patient.");
 		// addPatientBox.setAnimationEnabled(true);
@@ -86,6 +87,7 @@ public class MedReminder implements EntryPoint {
 	public void onModuleLoad() {
 	   // final ValidatorFactory factory = Validation.byDefaultProvider().configure().buildValidatorFactory();
 	    //final Validator validator = factory.getValidator();
+		@SuppressWarnings("unused")
 		String sid = Cookies.getCookie("sid");
 		
 		patientHolder = new PatientHolder();

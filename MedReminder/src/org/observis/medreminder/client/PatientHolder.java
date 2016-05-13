@@ -498,7 +498,6 @@ public class PatientHolder extends HorizontalPanel {
 						&& FieldVerifier.isValidDay(messageDayBox.getText())
 						&& FieldVerifier.isValidText(messageTitleBox.getText())) {
 					//
-					VerticalPanel newMsg = new VerticalPanel();
 
 					// replace text logic
 					String text = messageTextBox.getText();

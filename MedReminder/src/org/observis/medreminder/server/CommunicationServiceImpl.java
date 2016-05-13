@@ -1,7 +1,6 @@
 package org.observis.medreminder.server;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
