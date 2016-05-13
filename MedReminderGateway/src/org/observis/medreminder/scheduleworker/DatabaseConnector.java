@@ -18,43 +18,23 @@ import com.twilio.sdk.TwilioRestException;
 public class DatabaseConnector {
 	
 	// JDBC driver name and database URL
-		static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-		static final String DB_URL = "jdbc:mysql://192.168.8.102:3306/patients";
+		static String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+		static String DB_URL = "";
 		static Connection conn = null;
 		static Statement stmt = null;
 		// Database credentials
-		static final String USER = "root";
-		static final String PASS = "rootroot";
-		public static void main(String... args){
-			Thread checker = new Thread(new Runnable(){
-				@Override
-				public void run() {
-					while(true){
-					openConnection();
-						//select all deliveries with sent == 0
-						//check if their date <current date
-					//get details -> MedReminderWorker.sendSms
-						
-					timeCheck();
-						
-					
-					closeConnection();
-					try {
-						Thread.sleep(15000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					}
-				}
-				
-			});
-			
-			checker.run();
+		static String USER = "";
+		static String PASS = "";
+		
+		public static void setConnectionValues(String url,String usr,String pass){
+			DB_URL="jdbc:mysql://"+url;
+			USER =usr;
+			PASS = pass;
 		}
 		
 		public static void openConnection() { // opens connection to the server
 			try {
+				System.out.println(DB_URL);
 				// STEP 2: Register JDBC driver
 				Class.forName("com.mysql.jdbc.Driver");
 
