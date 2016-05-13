@@ -68,12 +68,15 @@ public class DatabaseConnector {
 		ResultSet rs = null;
 		String doctorID = "";
 		String resultString = "";
+		PreparedStatement doctorSql;
 		try {
+			doctorSql = conn.prepareStatement("SELECT doctor_id FROM doctors WHERE username LIKE ?");
+			doctorSql.setString(1, doctorName);
 			stmt = conn.createStatement();
-			String doctorSql = "SELECT doctor_id FROM doctors WHERE username LIKE '" + doctorName + "'";
+			
 			// get doctor_id from doctors database to find patients numbers for
 			// this exact doctor
-			rs = stmt.executeQuery(doctorSql);
+			rs = doctorSql.executeQuery();
 			while (rs.next()) {
 				doctorID = rs.getString("doctor_id");
 			}
@@ -81,11 +84,11 @@ public class DatabaseConnector {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		String getNumbers = "SELECT number FROM patients WHERE doctor_id LIKE '" + doctorID + "' ORDER BY number";
-
+		PreparedStatement getNumbers;
 		try {
-			rs = stmt.executeQuery(getNumbers);
+			getNumbers = conn.prepareStatement ("SELECT number FROM patients WHERE doctor_id LIKE ? ORDER BY number");
+			getNumbers.setString(1, doctorID);
+			rs = getNumbers.executeQuery();
 			while (rs.next()) {
 				if (resultString.length() < 2) {
 					resultString += rs.getString("number");
@@ -173,8 +176,6 @@ public class DatabaseConnector {
 		}
 		return null;
 	}
-
-
 
 	public static void insertSchedule(Message msg, String patientPhone) {
 		openConnection();
