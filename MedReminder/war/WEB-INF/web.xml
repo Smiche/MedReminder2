@@ -6,10 +6,6 @@
          xmlns="http://java.sun.com/xml/ns/javaee">
 
   <!-- Servlets -->
-  <servlet>
-    <servlet-name>greetServlet</servlet-name>
-    <servlet-class>org.observis.medreminder.server.GreetingServiceImpl</servlet-class>
-  </servlet>
     <servlet>
     <servlet-name>communicationServlet</servlet-name>
     <servlet-class>org.observis.medreminder.server.CommunicationServiceImpl</servlet-class>
@@ -19,11 +15,6 @@
     <servlet-name>loginServlet</servlet-name>
     <servlet-class>org.observis.medreminder.server.LoginServiceImpl</servlet-class>
   </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>greetServlet</servlet-name>
-    <url-pattern>/medreminder/greet</url-pattern>
-  </servlet-mapping>
   
     <servlet-mapping>
     <servlet-name>communicationServlet</servlet-name>

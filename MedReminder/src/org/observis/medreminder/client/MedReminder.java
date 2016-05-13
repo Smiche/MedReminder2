@@ -1,9 +1,5 @@
 package org.observis.medreminder.client;
 
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -14,7 +10,6 @@ import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -165,6 +160,7 @@ public class MedReminder implements EntryPoint {
 			@Override
 			public void execute() {
 				RootPanel.get("mainPanel").remove(packageHolder);
+				patientHolder.loadPatients();
 				RootPanel.get("mainPanel").add(patientHolder);
 			}
 		};

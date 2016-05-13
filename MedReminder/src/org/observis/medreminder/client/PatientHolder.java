@@ -36,7 +36,6 @@ public class PatientHolder extends HorizontalPanel {
 	private VerticalPanel individualPanel = new VerticalPanel();
 	private Button createCustomMessage = new Button("Add");
 	private TextBox phoneBox = new TextBox();
-
 	private TextBox patientNameBox = new TextBox();
 	private TextBox messageTitleBox = new TextBox();
 	private TextBox messageTextBox = new TextBox();
