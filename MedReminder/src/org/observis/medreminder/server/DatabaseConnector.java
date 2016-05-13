@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -12,8 +13,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+
+
 import org.observis.medreminder.client.Delivery;
 import org.observis.medreminder.client.Message;
+
 
 public class DatabaseConnector {
 	// JDBC driver name and database URL
@@ -180,14 +184,17 @@ public class DatabaseConnector {
 		curCal.add(Calendar.DATE, Integer.parseInt(msg.day) - 1);
 		ResultSet rs;
 		String patient_id = "";
-		String sqlSelect = "SELECT patient_id FROM patients WHERE number LIKE '" + patientPhone + "'";
+		PreparedStatement sqlSelect;
+		
 		String day = "" + curCal.get(Calendar.DAY_OF_MONTH);
 		String month = "" + (curCal.get(Calendar.MONTH) + 1);
 		String year = "" + curCal.get(Calendar.YEAR);
 		String date = day + "-" + month + "-" + year;
 		try {
+			sqlSelect = conn.prepareStatement("SELECT patient_id FROM patients WHERE number LIKE ?");
+			sqlSelect.setString(1,patientPhone);
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery(sqlSelect);
+			rs = sqlSelect.executeQuery();
 			while (rs.next()) {
 				patient_id = rs.getString("patient_id");
 			}
@@ -195,13 +202,20 @@ public class DatabaseConnector {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
-		
-		String sqlInsert = "INSERT INTO `delivery`(patient_id, text, date, time, sent) VALUES ('" + patient_id
-				+ "', '" + msg.text + "', '" + date + "', '" + msg.time + "', '0') ";
+		rs = null;
+		PreparedStatement sqlInsert;
+		//String sqlInsert = "INSERT INTO `delivery`(patient_id, text, date, time, sent) VALUES ('" + patient_id
+			//	+ "', '" + msg.text + "', '" + date + "', '" + msg.time + "', '0') ";
 		
 		try {
+			sqlInsert = conn.prepareStatement("INSERT INTO delivery (patient_id, text, date, time, sent) VALUES (?, ?, ?, ?, ?)");
+			sqlInsert.setString(1,patient_id);
+			sqlInsert.setString(2,msg.text);
+			sqlInsert.setString(3,date);
+			sqlInsert.setString(4,msg.time);
+			sqlInsert.setString(5, "0");
 			stmt = conn.createStatement();
-			stmt.execute(sqlInsert);
+			sqlInsert.executeUpdate();
 		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
