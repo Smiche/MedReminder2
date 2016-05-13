@@ -140,10 +140,13 @@ public class DatabaseConnector {
 		openConnection();
 		String result = "";
 		ResultSet rs = null;
-		String checkLoginSQL = "SELECT password FROM doctors WHERE username LIKE '" + username + "'";
+		PreparedStatement checkLoginSQL;
 		try {
+			checkLoginSQL = conn.prepareStatement("SELECT password FROM doctors WHERE username LIKE ?");
+			checkLoginSQL.setString(1, username);
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery(checkLoginSQL);
+			
+			rs = checkLoginSQL.executeQuery();
 			if (rs == null) {
 				return false;
 
