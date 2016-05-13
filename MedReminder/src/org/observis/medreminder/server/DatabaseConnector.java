@@ -13,11 +13,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-
-
 import org.observis.medreminder.client.Delivery;
 import org.observis.medreminder.client.Message;
-
 
 public class DatabaseConnector {
 	// JDBC driver name and database URL
@@ -54,7 +51,7 @@ public class DatabaseConnector {
 		try {
 			if (conn != null)
 				conn.close();
-				stmt = null;
+			stmt = null;
 			// System.out.println("Connection is closed");
 		} catch (SQLException se) {
 			se.printStackTrace();
@@ -63,7 +60,8 @@ public class DatabaseConnector {
 	}
 
 	public static String returnPatient(String doctorName) { // returns patients
-															// numbers for exact														// doctor name
+															// numbers for exact
+															// // doctor name
 		openConnection();
 		ResultSet rs = null;
 		String doctorID = "";
@@ -73,7 +71,7 @@ public class DatabaseConnector {
 			doctorSql = conn.prepareStatement("SELECT doctor_id FROM doctors WHERE username LIKE ?");
 			doctorSql.setString(1, doctorName);
 			stmt = conn.createStatement();
-			
+
 			// get doctor_id from doctors database to find patients numbers for
 			// this exact doctor
 			rs = doctorSql.executeQuery();
@@ -86,7 +84,7 @@ public class DatabaseConnector {
 		}
 		PreparedStatement getNumbers;
 		try {
-			getNumbers = conn.prepareStatement ("SELECT number FROM patients WHERE doctor_id LIKE ? ORDER BY number");
+			getNumbers = conn.prepareStatement("SELECT number FROM patients WHERE doctor_id LIKE ? ORDER BY number");
 			getNumbers.setString(1, doctorID);
 			rs = getNumbers.executeQuery();
 			while (rs.next()) {
@@ -126,7 +124,7 @@ public class DatabaseConnector {
 			addPatientSQL.setString(1, doctorID);
 			addPatientSQL.setString(2, phone);
 			addPatientSQL.executeUpdate();
-			//new patient added
+			// new patient added
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -145,7 +143,7 @@ public class DatabaseConnector {
 			checkLoginSQL = conn.prepareStatement("SELECT password FROM doctors WHERE username LIKE ?");
 			checkLoginSQL.setString(1, username);
 			stmt = conn.createStatement();
-			
+
 			rs = checkLoginSQL.executeQuery();
 			if (rs == null) {
 				return false;
@@ -191,14 +189,14 @@ public class DatabaseConnector {
 		ResultSet rs;
 		String patient_id = "";
 		PreparedStatement sqlSelect;
-		
+
 		String day = "" + curCal.get(Calendar.DAY_OF_MONTH);
 		String month = "" + (curCal.get(Calendar.MONTH) + 1);
 		String year = "" + curCal.get(Calendar.YEAR);
 		String date = day + "-" + month + "-" + year;
 		try {
 			sqlSelect = conn.prepareStatement("SELECT patient_id FROM patients WHERE number LIKE ?");
-			sqlSelect.setString(1,patientPhone);
+			sqlSelect.setString(1, patientPhone);
 			stmt = conn.createStatement();
 			rs = sqlSelect.executeQuery();
 			while (rs.next()) {
@@ -207,22 +205,24 @@ public class DatabaseConnector {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}
 		rs = null;
 		PreparedStatement sqlInsert;
-		//String sqlInsert = "INSERT INTO `delivery`(patient_id, text, date, time, sent) VALUES ('" + patient_id
-			//	+ "', '" + msg.text + "', '" + date + "', '" + msg.time + "', '0') ";
-		
+		// String sqlInsert = "INSERT INTO `delivery`(patient_id, text, date,
+		// time, sent) VALUES ('" + patient_id
+		// + "', '" + msg.text + "', '" + date + "', '" + msg.time + "', '0') ";
+
 		try {
-			sqlInsert = conn.prepareStatement("INSERT INTO delivery (patient_id, text, date, time, sent) VALUES (?, ?, ?, ?, ?)");
-			sqlInsert.setString(1,patient_id);
-			sqlInsert.setString(2,msg.text);
-			sqlInsert.setString(3,date);
-			sqlInsert.setString(4,msg.time);
+			sqlInsert = conn.prepareStatement(
+					"INSERT INTO delivery (patient_id, text, date, time, sent) VALUES (?, ?, ?, ?, ?)");
+			sqlInsert.setString(1, patient_id);
+			sqlInsert.setString(2, msg.text);
+			sqlInsert.setString(3, date);
+			sqlInsert.setString(4, msg.time);
 			sqlInsert.setString(5, "0");
 			stmt = conn.createStatement();
 			sqlInsert.executeUpdate();
-		
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -266,13 +266,16 @@ public class DatabaseConnector {
 		PreparedStatement sqlSelect;
 		ResultSet rs = null;
 		try {
-			sqlSelect = conn.prepareStatement("SELECT messages.id, messages.title, messages.time, messages.day, messages.text FROM packages Left join messages ON packages.id = messages.package_id WHERE packages.title LIKE ? ORDER BY day, time");
+			sqlSelect = conn.prepareStatement(
+					"SELECT messages.id, messages.title, messages.time, messages.day, messages.text FROM packages Left join messages ON packages.id = messages.package_id WHERE packages.title LIKE ? ORDER BY day, time");
 			sqlSelect.setString(1, title);
 			stmt = conn.createStatement();
 			rs = sqlSelect.executeQuery();
 			while (rs.next()) {
-				if(rs.getString("title")!= null && rs.getString("text") !=null && rs.getString("time")!=null && rs.getString("day")!=null)
-				messageList.add(new Message(rs.getString("title"),rs.getString("text"),rs.getString("time"),rs.getString("day")));
+				if (rs.getString("title") != null && rs.getString("text") != null && rs.getString("time") != null
+						&& rs.getString("day") != null)
+					messageList.add(new Message(rs.getString("title"), rs.getString("text"), rs.getString("time"),
+							rs.getString("day")));
 			}
 
 		} catch (SQLException e) {
@@ -282,8 +285,8 @@ public class DatabaseConnector {
 		closeConnection();
 		return messageList;
 	}
-	
-	public static void addPackagetoDB(String title){
+
+	public static void addPackagetoDB(String title) {
 		openConnection();
 		PreparedStatement sqlInsert;
 		try {
@@ -291,39 +294,39 @@ public class DatabaseConnector {
 			sqlInsert.setString(1, title);
 			stmt = conn.createStatement();
 			sqlInsert.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		closeConnection();
-	
+
 	}
 
-	public static void addMessagetoDB(Message msg, String package_title){
+	public static void addMessagetoDB(Message msg, String package_title) {
 		openConnection();
 		String package_id = "";
 		PreparedStatement sqlSelect;
 		PreparedStatement sqlInsert;
 		ResultSet rs = null;
-	
+
 		try {
 			sqlSelect = conn.prepareStatement("SELECT id FROM packages WHERE title LIKE ?");
 			sqlSelect.setString(1, package_title);
 			stmt = conn.createStatement();
 			rs = sqlSelect.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				package_id = rs.getString("id");
 			}
-		
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 		try {
-			sqlInsert = conn.prepareStatement("INSERT INTO messages(title,text,time,day,package_id) VALUES (?,?,?,?,?)");
+			sqlInsert = conn
+					.prepareStatement("INSERT INTO messages(title,text,time,day,package_id) VALUES (?,?,?,?,?)");
 			sqlInsert.setString(1, msg.title);
 			sqlInsert.setString(2, msg.text);
 			sqlInsert.setString(3, msg.time);
@@ -337,14 +340,14 @@ public class DatabaseConnector {
 		}
 		closeConnection();
 	}
-	
-	public static void removeMessageDB (String title, String text){
+
+	public static void removeMessageDB(String title, String text) {
 		openConnection();
 		PreparedStatement sqlRemove;
 		try {
 			sqlRemove = conn.prepareStatement("DELETE FROM messages WHERE title = ? AND text = ?");
 			sqlRemove.setString(1, title);
-			sqlRemove.setString(2,text);
+			sqlRemove.setString(2, text);
 			stmt = conn.createStatement();
 			sqlRemove.executeUpdate();
 		} catch (SQLException e) {
@@ -352,9 +355,9 @@ public class DatabaseConnector {
 			e.printStackTrace();
 		}
 		closeConnection();
-		}
-	
-	public static void removePackageDB (String title){
+	}
+
+	public static void removePackageDB(String title) {
 		openConnection();
 		PreparedStatement sqlRemove;
 		try {
@@ -367,13 +370,14 @@ public class DatabaseConnector {
 			e.printStackTrace();
 		}
 		closeConnection();
-		
+
 	}
-	
-	public static void updateMessageDB (String oldTitle, String newTitle, String newText, String newTime, String newDay){
+
+	public static void updateMessageDB(String oldTitle, String newTitle, String newText, String newTime,
+			String newDay) {
 		openConnection();
 		PreparedStatement sqlUpdate;
-		
+
 		try {
 			sqlUpdate = conn.prepareStatement("UPDATE messages SET title = (?, ?, ?, ?) WHERE title LIKE ?");
 			sqlUpdate.setString(1, newTitle);
@@ -381,7 +385,7 @@ public class DatabaseConnector {
 			sqlUpdate.setString(3, newTime);
 			sqlUpdate.setString(4, newDay);
 			sqlUpdate.setString(5, oldTitle);
-			
+
 			stmt = conn.createStatement();
 			sqlUpdate.executeUpdate();
 		} catch (SQLException e) {
@@ -390,26 +394,27 @@ public class DatabaseConnector {
 		}
 		closeConnection();
 	}
-	
-	public static void updatePackageDB (String oldTitle, String newTitle) {
+
+	public static void updatePackageDB(String oldTitle, String newTitle) {
 		openConnection();
 		PreparedStatement sqlUpdate;
 		try {
 			sqlUpdate = conn.prepareStatement("UPDATE packages SET title=? WHERE title LIKE ?");
-			sqlUpdate.setString(1,newTitle);
+			sqlUpdate.setString(1, newTitle);
 			sqlUpdate.setString(2, oldTitle);
-		
+
 			stmt = conn.createStatement();
-			
+
 			sqlUpdate.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		closeConnection();
-		
+
 	}
-	public static ArrayList<Delivery> returnDeliveryDB(String phone){
+
+	public static ArrayList<Delivery> returnDeliveryDB(String phone) {
 		openConnection();
 		ArrayList<Delivery> deliveryList = new ArrayList<Delivery>();
 		String patient_id = "";
@@ -420,35 +425,37 @@ public class DatabaseConnector {
 		try {
 			sqlGetId = conn.prepareStatement("SELECT patient_id,number FROM patients WHERE number = ?");
 			sqlGetId.setString(1, phone);
-			
+
 			stmt = conn.createStatement();
 			rs = sqlGetId.executeQuery();
-			while(rs.next())
-			patient_id = rs.getString("patient_id");
+			while (rs.next())
+				patient_id = rs.getString("patient_id");
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		try {
-			sqlSelect = conn.prepareStatement("SELECT  text, date, time, sent FROM delivery WHERE patient_id = ? ORDER BY date, time");
+			sqlSelect = conn.prepareStatement(
+					"SELECT  text, date, time, sent FROM delivery WHERE patient_id = ? ORDER BY date, time");
 			sqlSelect.setString(1, patient_id);
 			rs = sqlSelect.executeQuery();
-			while(rs.next()){
-				deliveryList.add(new Delivery(phone, rs.getString("text"),rs.getString("date"),rs.getString("time"),rs.getString("sent")));
+			while (rs.next()) {
+				deliveryList.add(new Delivery(phone, rs.getString("text"), rs.getString("date"), rs.getString("time"),
+						rs.getString("sent")));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		closeConnection();
 		return deliveryList;
 	}
-	
-	public static void removePatientDB(String phone){
+
+	public static void removePatientDB(String phone) {
 		openConnection();
 		PreparedStatement sqlRemove;
-		//String sqlRemove = "DELETE FROM patients WHERE number = '"+phone+"'";
+		// String sqlRemove = "DELETE FROM patients WHERE number = '"+phone+"'";
 		try {
 			sqlRemove = conn.prepareStatement("DELETE FROM patients WHERE number = ?");
 			sqlRemove.setString(1, phone);
@@ -459,10 +466,10 @@ public class DatabaseConnector {
 			e.printStackTrace();
 		}
 		closeConnection();
-		
+
 	}
-	
-	public static void removeDeliveryDB(Delivery chosenDelivery){
+
+	public static void removeDeliveryDB(Delivery chosenDelivery) {
 		openConnection();
 		ResultSet rs = null;
 		String patient_id = "";
@@ -470,36 +477,37 @@ public class DatabaseConnector {
 		PreparedStatement sqlSelectPatient;
 		PreparedStatement sqlSelectDelivery;
 		PreparedStatement sqlRemove;
-		
+
 		try {
 			sqlSelectPatient = conn.prepareStatement("SELECT patient_id FROM patients WHERE number = ?");
 			sqlSelectPatient.setString(1, chosenDelivery.patientPhone);
-			
+
 			stmt = conn.createStatement();
 			rs = sqlSelectPatient.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				patient_id = rs.getString("patient_id");
 			}
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		rs = null;
-		
+
 		try {
-			sqlSelectDelivery = conn.prepareStatement("SELECT delivery_id FROM delivery WHERE patient_id = ? AND text = ? AND date = ? AND time = ? ");
+			sqlSelectDelivery = conn.prepareStatement(
+					"SELECT delivery_id FROM delivery WHERE patient_id = ? AND text = ? AND date = ? AND time = ? ");
 			sqlSelectDelivery.setString(1, patient_id);
 			sqlSelectDelivery.setString(2, chosenDelivery.text);
 			sqlSelectDelivery.setString(3, chosenDelivery.date);
 			sqlSelectDelivery.setString(4, chosenDelivery.time);
-			//sqlSelectDelivery.setString(5, chosenDelivery.sent);
+			// sqlSelectDelivery.setString(5, chosenDelivery.sent);
 			stmt = conn.createStatement();
 			rs = sqlSelectDelivery.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				delivery_id = rs.getString("delivery_id");
 			}
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -513,87 +521,90 @@ public class DatabaseConnector {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		closeConnection();
 	}
-	
-	public static void addDeliveryDB(Delivery delivery, String phone){
+
+	public static void addDeliveryDB(Delivery delivery, String phone) {
 		openConnection();
 		String patient_id = "";
 		ResultSet rs = null;
 		PreparedStatement sqlSelect;
 		PreparedStatement sqlUpdate;
-	
+
 		try {
 			sqlSelect = conn.prepareStatement("SELECT patient_id FROM patients WHERE number = ?");
 			sqlSelect.setString(1, delivery.patientPhone);
 			stmt = conn.createStatement();
 			rs = sqlSelect.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				patient_id = rs.getString("patient_id");
 			}
-			
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		try {
-			sqlUpdate = conn.prepareStatement("INSERT INTO delivery (patient_id, text, date, time, sent) VALUES (?, ?, ?, ?, ?)");
+			sqlUpdate = conn.prepareStatement(
+					"INSERT INTO delivery (patient_id, text, date, time, sent) VALUES (?, ?, ?, ?, ?)");
 			sqlUpdate.setString(1, patient_id);
 			sqlUpdate.setString(2, delivery.text);
 			sqlUpdate.setString(3, delivery.date);
 			sqlUpdate.setString(4, delivery.time);
 			sqlUpdate.setString(5, "0");
-			
 
 			stmt = conn.createStatement();
 			sqlUpdate.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		closeConnection();
 	}
 
-	
-	public static void updateDeliveryDB(Delivery oldDelivery, Delivery changedDelivery){
+	public static void updateDeliveryDB(Delivery oldDelivery, Delivery changedDelivery) {
 		openConnection();
-		
-		System.out.println("Old delivery: "+oldDelivery.text+" "+oldDelivery.patientPhone+" "+oldDelivery.time);
-		System.out.println("Old delivery: "+changedDelivery.text+" "+changedDelivery.patientPhone+" "+changedDelivery.time);
+
+		System.out
+				.println("Old delivery: " + oldDelivery.text + " " + oldDelivery.patientPhone + " " + oldDelivery.time);
+		System.out.println("Old delivery: " + changedDelivery.text + " " + changedDelivery.patientPhone + " "
+				+ changedDelivery.time);
 		String patient_id = "";
 		String delivery_id = "";
 		PreparedStatement sqlSelect;
 		PreparedStatement sqlSelectDelivery;
 		PreparedStatement sqlUpdate;
 		ResultSet rs = null;
-		//String sqlSelect = "SELECT patient_id FROM patients WHERE number = 
-		//'"+changedDelivery.patientPhone+"'";
+		// String sqlSelect = "SELECT patient_id FROM patients WHERE number =
+		// '"+changedDelivery.patientPhone+"'";
 
 		try {
 			sqlSelect = conn.prepareStatement("SELECT patient_id FROM patients WHERE number = ?");
 			sqlSelect.setString(1, changedDelivery.patientPhone);
 			stmt = conn.createStatement();
 			rs = sqlSelect.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				patient_id = rs.getString("patient_id");
 			}
-			
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		rs = null;
-		
-		//String sqlSelectDelivery = "SELECT delivery_id FROM delivery WHERE patient_id = '"+patient_id+"' "
-				//+ "AND text = '"+oldDelivery.text+"' AND date = '"+oldDelivery.date+"' AND time = '"+oldDelivery.time+"' AND sent = '"+oldDelivery.sent+"'";
+
+		// String sqlSelectDelivery = "SELECT delivery_id FROM delivery WHERE
+		// patient_id = '"+patient_id+"' "
+		// + "AND text = '"+oldDelivery.text+"' AND date =
+		// '"+oldDelivery.date+"' AND time = '"+oldDelivery.time+"' AND sent =
+		// '"+oldDelivery.sent+"'";
 		try {
-			sqlSelectDelivery = conn.prepareStatement("SELECT delivery_id FROM delivery WHERE patient_id = ? AND text = ? AND date = ? AND time = ? AND sent = ?");
+			sqlSelectDelivery = conn.prepareStatement(
+					"SELECT delivery_id FROM delivery WHERE patient_id = ? AND text = ? AND date = ? AND time = ? AND sent = ?");
 			sqlSelectDelivery.setString(1, patient_id);
 			sqlSelectDelivery.setString(2, oldDelivery.text);
 			sqlSelectDelivery.setString(3, oldDelivery.date);
@@ -601,15 +612,14 @@ public class DatabaseConnector {
 			sqlSelectDelivery.setString(5, oldDelivery.sent);
 			stmt = conn.createStatement();
 			rs = sqlSelectDelivery.executeQuery();
-			while(rs.next())
-			delivery_id = rs.getString("delivery_id");
-			
+			while (rs.next())
+				delivery_id = rs.getString("delivery_id");
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-				
+
 		try {
 			sqlUpdate = conn.prepareStatement("UPDATE delivery SET text = ?, date = ?, time = ? WHERE delivery_id = ?");
 			sqlUpdate.setString(1, changedDelivery.text);
@@ -622,11 +632,11 @@ public class DatabaseConnector {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 		closeConnection();
 	}
-	public static void removeAllDeliveryDB(String phone){
+
+	public static void removeAllDeliveryDB(String phone) {
 		openConnection();
 		
 		String patient_id = "";
@@ -638,7 +648,7 @@ public class DatabaseConnector {
 			sqlSelect.setString(1, phone);
 			stmt = conn.createStatement();
 			rs = sqlSelect.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				patient_id = rs.getString("patient_id");
 			}
 		} catch (SQLException e) {
@@ -648,18 +658,14 @@ public class DatabaseConnector {
 		try {
 			sqlDelete = conn.prepareStatement("DELETE FROM delivery WHERE patient_id = ?");
 			sqlDelete.setString(1, patient_id);
-			
+
 			stmt = conn.createStatement();
 			sqlDelete.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		closeConnection();
 	}
 
 }
-
-
-
