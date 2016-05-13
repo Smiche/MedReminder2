@@ -393,10 +393,15 @@ public class DatabaseConnector {
 	
 	public static void updatePackageDB (String oldTitle, String newTitle) {
 		openConnection();
-		String sqlUpdate = "UPDATE packages SET title='"+newTitle+"' WHERE title LIKE '"+oldTitle+"'";
+		PreparedStatement sqlUpdate;
 		try {
+			sqlUpdate = conn.prepareStatement("UPDATE packages SET title=? WHERE title LIKE ?");
+			sqlUpdate.setString(1,newTitle);
+			sqlUpdate.setString(2, oldTitle);
+		
 			stmt = conn.createStatement();
-			stmt.executeUpdate(sqlUpdate);
+			
+			sqlUpdate.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -408,21 +413,26 @@ public class DatabaseConnector {
 		openConnection();
 		ArrayList<Delivery> deliveryList = new ArrayList<Delivery>();
 		String patient_id = "";
-		String sqlGetid = "SELECT patient_id,number FROM patients WHERE number = '"+phone+"'";
+		PreparedStatement sqlGetId;
+		PreparedStatement sqlSelect;
 
 		ResultSet rs = null;
 		try {
+			sqlGetId = conn.prepareStatement("SELECT patient_id,number FROM patients WHERE number = ?");
+			sqlGetId.setString(1, phone);
+			
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery(sqlGetid);
+			rs = sqlGetId.executeQuery();
 			while(rs.next())
 			patient_id = rs.getString("patient_id");
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		String sqlSelect = "SELECT  text, date, time, sent FROM delivery WHERE patient_id = '"+patient_id+"' ORDER BY date, time";
 		try {
-			rs = stmt.executeQuery(sqlSelect);
+			sqlSelect = conn.prepareStatement("SELECT  text, date, time, sent FROM delivery WHERE patient_id = ? ORDER BY date, time");
+			sqlSelect.setString(1, patient_id);
+			rs = sqlSelect.executeQuery();
 			while(rs.next()){
 				deliveryList.add(new Delivery(phone, rs.getString("text"),rs.getString("date"),rs.getString("time"),rs.getString("sent")));
 			}
@@ -437,10 +447,13 @@ public class DatabaseConnector {
 	
 	public static void removePatientDB(String phone){
 		openConnection();
-		String sqlRemove = "DELETE FROM patients WHERE number = '"+phone+"'";
+		PreparedStatement sqlRemove;
+		//String sqlRemove = "DELETE FROM patients WHERE number = '"+phone+"'";
 		try {
+			sqlRemove = conn.prepareStatement("DELETE FROM patients WHERE number = ?");
+			sqlRemove.setString(1, phone);
 			stmt = conn.createStatement();
-			stmt.executeUpdate(sqlRemove);
+			sqlRemove.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -454,11 +467,16 @@ public class DatabaseConnector {
 		ResultSet rs = null;
 		String patient_id = "";
 		String delivery_id = "";
-		String sqlSelectPatient = "SELECT patient_id FROM patients WHERE number = '"+chosenDelivery.patientPhone+"'";
+		PreparedStatement sqlSelectPatient;
+		PreparedStatement sqlSelectDelivery;
+		PreparedStatement sqlRemove;
 		
 		try {
+			sqlSelectPatient = conn.prepareStatement("SELECT patient_id FROM patients WHERE number = ?");
+			sqlSelectPatient.setString(1, chosenDelivery.patientPhone);
+			
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery(sqlSelectPatient);
+			rs = sqlSelectPatient.executeQuery();
 			while(rs.next()){
 				patient_id = rs.getString("patient_id");
 			}
@@ -468,10 +486,16 @@ public class DatabaseConnector {
 			e.printStackTrace();
 		}
 		rs = null;
-		String sqlSelectDelivery ="SELECT delivery_id FROM delivery WHERE patient_id = '"+patient_id+"' AND text = '"+chosenDelivery.text+"' AND date = '"+chosenDelivery.date+"' AND time = '"+chosenDelivery.time+"' AND sent = '"+chosenDelivery.sent+"'";
+		
 		try {
+			sqlSelectDelivery = conn.prepareStatement("SELECT delivery_id FROM delivery WHERE patient_id = ? AND text = ? AND date = ? AND time = ? AND sent ?");
+			sqlSelectDelivery.setString(1, patient_id);
+			sqlSelectDelivery.setString(2, chosenDelivery.text);
+			sqlSelectDelivery.setString(3, chosenDelivery.date);
+			sqlSelectDelivery.setString(4, chosenDelivery.time);
+			sqlSelectDelivery.setString(5, chosenDelivery.sent);
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery(sqlSelectDelivery);
+			rs = sqlSelectDelivery.executeQuery();
 			while(rs.next()){
 				delivery_id = rs.getString("delivery_id");
 			}
@@ -480,10 +504,11 @@ public class DatabaseConnector {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String sqlRemove = "DELETE FROM delivery WHERE 	delivery_id ='"+delivery_id+"'";
 		try {
+			sqlRemove = conn.prepareStatement("DELETE FROM delivery WHERE delivery_id = ?");
+			sqlRemove.setString(1, delivery_id);
 			stmt = conn.createStatement();
-			stmt.executeUpdate(sqlRemove);
+			sqlRemove.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
