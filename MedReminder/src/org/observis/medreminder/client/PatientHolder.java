@@ -515,11 +515,14 @@ public class PatientHolder extends HorizontalPanel {
 					// replace text logic
 					String text = messageTextArea.getText();
 					// .replaceAll("[value]", "");
-					TextBox box = new TextBox();
+					TextArea box = new TextArea();
+					
 					box.setText(text);
+					box.setCharacterWidth(22);
+				    box .setVisibleLines(5);
 					// box.setAlignment(TextAlignment.JUSTIFY);
 
-					TextBox hour = new TextBox();
+					TextBox hour = new TextBox();	
 					hour.setWidth("15px");
 					hour.setMaxLength(2);
 					hour.setText(messageHourBox.getText());

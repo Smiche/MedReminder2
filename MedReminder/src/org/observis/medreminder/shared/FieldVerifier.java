@@ -125,9 +125,14 @@ public class FieldVerifier {
 
 	public static boolean isValidDay(String day) {
 		String regex = "[0-9]+";
-		Integer dayNum = Integer.parseInt(day);
-		if (day.matches(regex) && dayNum < 8) {
-			return true;
+		Integer dayNum;
+		if (day.matches(regex)) {
+			dayNum = Integer.parseInt(day);
+			if (dayNum < 8) {
+				return true;
+			} else {
+				return false;
+			}
 		} else {
 			return false;
 		}
