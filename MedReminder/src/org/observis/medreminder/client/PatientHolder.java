@@ -40,9 +40,9 @@ public class PatientHolder extends HorizontalPanel {
 	private TextBox patientNameBox = new TextBox();
 	private TextBox messageTitleBox = new TextBox();
 	private TextArea messageTextArea = new TextArea();
-	private TextBox messageHourBox = new TextBox();
-	private TextBox messageMinuteBox = new TextBox();
-	private TextBox messageDayBox = new TextBox();
+	private CustomTextBox messageHourBox = new CustomTextBox(BoxType.HOURBOX);
+	private CustomTextBox messageMinuteBox = new CustomTextBox(BoxType.MINUTEBOX);
+	private CustomTextBox messageDayBox = new CustomTextBox(BoxType.DAYBOX);
 	private TextArea deliveryTextArea = new TextArea();
 	private TextBox deliveryDateBox = new TextBox();
 	private TextBox deliveryTimeBox = new TextBox();
@@ -70,7 +70,6 @@ public class PatientHolder extends HorizontalPanel {
 	private String selectedDelivery = "";
 
 	private HandlerRegistration closeDialogHandlerReg;
-	private HandlerRegistration phoneBoxHandlerReg;
 	private Button removeAllDeliveries = new Button("Remove all");
 
 	public PatientHolder() {
@@ -495,9 +494,12 @@ public class PatientHolder extends HorizontalPanel {
 				createCustomMessageBox.hide();
 				messageTitleBox.setText("");
 				messageTextArea.setText("");
-				messageDayBox.setText("");
-				messageHourBox.setText("");
-				messageMinuteBox.setText("");
+				messageDayBox.reset();
+				messageHourBox.reset();
+				messageMinuteBox.reset();
+				
+				
+				
 			}
 		});
 		addClick.addClickHandler(new ClickHandler() {
@@ -557,6 +559,12 @@ public class PatientHolder extends HorizontalPanel {
 					messageHourBox.setText("");
 					messageMinuteBox.setText("");
 				} 
+				else{
+					messageHourBox.addValidationHandler();
+					messageMinuteBox.addValidationHandler();
+					messageDayBox.addValidationHandler();
+					
+				}
 			}
 
 		});

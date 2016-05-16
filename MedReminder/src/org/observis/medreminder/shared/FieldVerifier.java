@@ -1,4 +1,4 @@
-package org.observis.medreminder.shared;
+	package org.observis.medreminder.shared;
 
 import java.util.ArrayList;
 
@@ -31,12 +31,11 @@ public class FieldVerifier {
 	 * Verifies that the specified name is valid for our service.
 	 * 
 	 * In this example, we only require that the name is at least four
-	 * characters. In your application, you can use more complex checks to
-	 * ensure that usernames, passwords, email addresses, URLs, and other fields
-	 * have the proper syntax.
+	 * characters. In your application, you can use more complex checks to ensure
+	 * that usernames, passwords, email addresses, URLs, and other fields have the
+	 * proper syntax.
 	 * 
-	 * @param name
-	 *            the name to validate
+	 * @param name the name to validate
 	 * @return true if valid, false if invalid
 	 */
 	public static boolean isValidName(String name) {
@@ -52,140 +51,115 @@ public class FieldVerifier {
 		}
 		return pass.length() > 3;
 	}
-
-	public static boolean isValidText(String text) {
-		if (text.length() < 1 || text.length() > 200) {
+	public static boolean isValidText(String text){
+		if(text.length()<1 || text.length()>200){
 			return false;
 		} else {
 			return true;
 		}
-
+		
 	}
-
-	public static boolean isValidDate(String date) {
-
+	public static boolean isValidDate(String date){
+		
 		String[] toTest;
 		toTest = date.split("-");
 		String regex = "[0-9]+";
 		String pureDate = date.replace("-", "");
 
-		if (!pureDate.matches(regex)) {
-			return false;
+		if(!pureDate.matches(regex)){
+		return false;
 		}
-		if (toTest.length != 3) {
+		if(toTest.length!=3){
 			return false;
 		}
 		ArrayList<Integer> nums = new ArrayList<Integer>();
-		for (int i = 0; i < 3; i++) {
+		for(int i=0;i<3;i++){
 			nums.add(Integer.parseInt(toTest[i]));
 		}
-		for (Integer n : nums) {
-			if (n == null) {
+		for(Integer n:nums){
+			if(n==null){
 				return false;
 			}
 		}
 		return true;
 	}
-
-	public static boolean isValidPhone(String phone) {
+	public static boolean isValidPhone(String phone){
 		String pluslessPhone = phone.replaceAll("\\+", "");
 		String regex = "[0-9]+";
-		if (phone != null && pluslessPhone.matches(regex)
-				&& pluslessPhone.length() == 12 && phone.startsWith("+")) {
+		if(phone!=null && pluslessPhone.matches(regex) &&pluslessPhone.length()==12 && phone.startsWith("+")){
 			return true;
 		}
-		return false;
+			return false;
 	}
-
-	public static boolean isValidTime(String time) {
-
+	public static boolean isValidTime(String time){
+		
 		String[] toTest;
 		toTest = time.split(":");
 		String pureTime = time.replace(":", "");
 		String regex = "[0-9]+";
-		if (!pureTime.matches(regex)) {
+		if(!pureTime.matches(regex)){
 			return false;
-
+			
 		}
-		if (toTest.length != 2) {
+		if(toTest.length!=2){
 			return false;
 		}
 		ArrayList<Integer> nums = new ArrayList<Integer>();
-		for (int i = 0; i < 2; i++) {
+		for(int i = 0;i<2;i++){
 			nums.add(Integer.parseInt(toTest[i]));
 		}
-		for (Integer n : nums) {
-			if (n == null) {
+		for(Integer n:nums){
+			if(n==null){
 				return false;
 			}
-
-		}
-		return true;
+			
+		}return true;
 	}
-
-	public static boolean isValidDay(String day) {
+	public static boolean isValidDay(String day){
 		String regex = "[0-9]+";
 		Integer dayNum = Integer.parseInt(day);
-		if (day.matches(regex) && dayNum < 8) {
+		if(day.matches(regex) && dayNum<8){
 			return true;
-		} else {
-			return false;
+		}else{
+		return false;
 		}
 	}
-
-	public static boolean isValidHour(String hour) {
+	public static boolean isValidHour(String hour){
 		String regex = "[0-9]+";
-		Integer hourNum;
-		if (hour.matches(regex)) {
-			hourNum = Integer.parseInt(hour);
-			if (hourNum < 24) {
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			return false;
+		Integer hourNum = Integer.parseInt(hour);
+		if(hour.matches(regex) && hourNum<25){
+			return true;
+		}else{
+		return false;
 		}
-
+		
 	}
-
-	public static boolean isValidMinute(String minute) {
+	public static boolean isValidMinute(String minute){
 		String regex = "[0-9]+";
-		Integer minNum;
-		if (minute.matches(regex)) {
-			minNum = Integer.parseInt(minute);
-			if (minNum < 60) {
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			return false;
+		Integer minNum = Integer.parseInt(minute);
+		if(minute.matches(regex) && minNum<61){
+			return true;
+		}else{
+		return false;
 		}
 	}
-
-	public static boolean isValidMessage(Message msg) {
-		if (msg == null || !FieldVerifier.isValidDay(msg.day)
-				|| !FieldVerifier.isValidTime(msg.time)
-				|| !FieldVerifier.isValidText(msg.title)
-				|| !FieldVerifier.isValidText(msg.text))
-			return false;
-
+	
+	public static boolean isValidMessage(Message msg){
+		if(msg== null || !FieldVerifier.isValidDay(msg.day) || !FieldVerifier.isValidTime(msg.time) || !FieldVerifier.isValidText(msg.title) || !FieldVerifier.isValidText(msg.text))
+		return false;
+		
 		return true;
 	}
-
-	public static boolean isValidDelivery(Delivery del) {
-		if (del == null) {
+	
+	public static boolean isValidDelivery(Delivery del){
+		if(del == null){
 			return false;
 		}
-		if (!FieldVerifier.isValidDate(del.date)
-				|| !FieldVerifier.isValidTime(del.time)
-				|| !FieldVerifier.isValidPhone(del.patientPhone)
-				|| !FieldVerifier.isValidText(del.text)) {
+		if(!FieldVerifier.isValidDate(del.date) || !FieldVerifier.isValidTime(del.time) || !FieldVerifier.isValidPhone(del.patientPhone) || !FieldVerifier.isValidText(del.text)){
 			return false;
 		}
-
+		
 		return true;
 	}
-
+	
 }
