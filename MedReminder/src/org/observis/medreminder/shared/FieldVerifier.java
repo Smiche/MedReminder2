@@ -1,4 +1,4 @@
-package org.observis.medreminder.shared;
+	package org.observis.medreminder.shared;
 
 import java.util.ArrayList;
 
