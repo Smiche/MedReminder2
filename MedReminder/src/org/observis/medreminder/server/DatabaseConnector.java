@@ -1,8 +1,5 @@
 package org.observis.medreminder.server;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -19,7 +16,7 @@ import org.observis.medreminder.client.Message;
 public class DatabaseConnector {
 	// JDBC driver name and database URL
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	static final String DB_URL = "jdbc:mysql://192.168.0.186:3306/patients";
+	static final String DB_URL = "jdbc:mysql://192.168.8.102:3306/patients";
 	static Connection conn = null;
 	static Statement stmt = null;
 	// Database credentials
