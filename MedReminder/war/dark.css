@@ -1061,7 +1061,8 @@ a, a:visited, a:hover {
 }
 
 .gwt-TextArea {
-	padding: 2px;
+	border-radius: 3px;
+	-webkit-appearance: caret;
 }
 
 .gwt-TextArea-readonly {
@@ -1172,6 +1173,10 @@ a, a:visited, a:hover {
 }
 
 .dateBoxPopup {
+	
+}
+
+.gwt-textArea {
 	
 }
 

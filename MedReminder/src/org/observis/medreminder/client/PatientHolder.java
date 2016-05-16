@@ -23,6 +23,7 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.SelectionChangeEvent;
@@ -38,7 +39,7 @@ public class PatientHolder extends HorizontalPanel {
 	private TextBox phoneBox = new TextBox();
 	private TextBox patientNameBox = new TextBox();
 	private TextBox messageTitleBox = new TextBox();
-	private TextBox messageTextBox = new TextBox();
+	private TextArea messageTextArea = new TextArea();
 	private TextBox messageHourBox = new TextBox();
 	private TextBox messageMinuteBox = new TextBox();
 	private TextBox messageDayBox = new TextBox();
@@ -452,7 +453,9 @@ public class PatientHolder extends HorizontalPanel {
 		closeButton.getElement().setId("closeButton");
 		VerticalPanel dialogVPanel = new VerticalPanel();
 		messageTitleBox.setText("");
-		messageTextBox.setText("");
+		messageTextArea.setCharacterWidth(22);
+	    messageTextArea.setVisibleLines(5);
+		messageTextArea.setText("");
 		messageDayBox.setText("");
 		messageHourBox.setText("");
 		messageMinuteBox.setText("");
@@ -464,7 +467,7 @@ public class PatientHolder extends HorizontalPanel {
 		dialogVPanel.add(new HTML("<b>*Title:</b>"));
 		dialogVPanel.add(messageTitleBox);
 		dialogVPanel.add(new HTML("<b>*Text:</b>"));
-		dialogVPanel.add(messageTextBox);
+		dialogVPanel.add(messageTextArea);
 		dialogVPanel.add(new HTML("<b>*Day <i>(i.e. 1-7)</i>:</b>"));
 		dialogVPanel.add(messageDayBox);
 		dialogVPanel.add(new HTML("<b>*Time:</b>"));
@@ -482,7 +485,7 @@ public class PatientHolder extends HorizontalPanel {
 			public void onClick(ClickEvent event) {
 				createCustomMessageBox.hide();
 				messageTitleBox.setText("");
-				messageTextBox.setText("");
+				messageTextArea.setText("");
 				messageDayBox.setText("");
 				messageHourBox.setText("");
 				messageMinuteBox.setText("");
@@ -492,14 +495,14 @@ public class PatientHolder extends HorizontalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				if (FieldVerifier.isValidText(messageTextBox.getText())
+				if (FieldVerifier.isValidText(messageTextArea.getText())
 						&& FieldVerifier.isValidHour(messageHourBox.getText())
 						&& FieldVerifier.isValidMinute(messageMinuteBox.getText())
 						&& FieldVerifier.isValidDay(messageDayBox.getText())
 						&& FieldVerifier.isValidText(messageTitleBox.getText())) {
 					//
 					// replace text logic
-					String text = messageTextBox.getText();
+					String text = messageTextArea.getText();
 					// .replaceAll("[value]", "");
 					TextBox box = new TextBox();
 					box.setText(text);
@@ -540,7 +543,7 @@ public class PatientHolder extends HorizontalPanel {
 					packagePanel.add(createCustomMessage);
 					createCustomMessageBox.hide();
 					messageTitleBox.setText("");
-					messageTextBox.setText("");
+					messageTextArea.setText("");
 					messageDayBox.setText("");
 					messageHourBox.setText("");
 					messageMinuteBox.setText("");
