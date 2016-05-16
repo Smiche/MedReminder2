@@ -117,9 +117,10 @@ public class DatabaseConnector {
 			while (rs.next()) {
 				doctorID = rs.getString("doctor_id");
 			}
-			addPatientSQL = conn.prepareStatement("INSERT INTO patients (doctor_id, number) VALUES (?,?)");
+			addPatientSQL = conn.prepareStatement("INSERT INTO patients (doctor_id, number,name) VALUES (?,?,?)");
 			addPatientSQL.setString(1, doctorID);
 			addPatientSQL.setString(2, phone);
+			addPatientSQL.setString(3,name);
 			addPatientSQL.executeUpdate();
 			// new patient added
 		} catch (SQLException e) {
