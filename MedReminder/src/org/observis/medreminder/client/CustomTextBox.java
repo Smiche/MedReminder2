@@ -77,6 +77,13 @@ public class CustomTextBox extends TextBox {
 		}
 	}
 
+	void reset(){
+		if (boxValidationHandlerReg != null) {
+			boxValidationHandlerReg.removeHandler();
+			boxValidationHandlerReg = null;
+		}
+		this.setText("");
+	}
 	void removeValidationHandler() {
 		if (boxValidationHandlerReg != null) {
 			boxValidationHandlerReg.removeHandler();
