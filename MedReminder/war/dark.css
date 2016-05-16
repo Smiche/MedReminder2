@@ -421,7 +421,9 @@ a, a:visited, a:hover {
 }
 
 .error-validation {
-	background-color: red;
+	background-color: #FFBABA;
+	color: #D8000C;
+
 }
 
 .gwt-ListBox {
