@@ -5,31 +5,28 @@ import com.google.gwt.user.client.ui.TextBox;
 
 public class CustomTextBox extends TextBox{
 	HandlerRegistration boxValidationHandlerReg;
-	public static enum BoxEnum {
-	   PHONEBOX,DAYBOX,TEXTBOX,TITLEBOX,HOURBOX,MINUTEBOX 
-	}
 	
-	BoxEnum boxType;
+	BoxType boxType;
 	
-	public CustomTextBox(BoxEnum type){
+	public CustomTextBox(BoxType type){
 		switch(type){
 		case PHONEBOX:
-			this.boxType = BoxEnum.PHONEBOX;
+			this.boxType = BoxType.PHONEBOX;
 			break;
 		case DAYBOX:
-			this.boxType = BoxEnum.DAYBOX;
+			this.boxType = BoxType.DAYBOX;
 			break;
 		case TEXTBOX:
-			this.boxType = BoxEnum.TEXTBOX;
+			this.boxType = BoxType.TEXTBOX;
 			break;
 		case TITLEBOX:
-			this.boxType = BoxEnum.TITLEBOX;
+			this.boxType = BoxType.TITLEBOX;
 			break;
 		case HOURBOX: 
-			this.boxType = BoxEnum.HOURBOX;
+			this.boxType = BoxType.HOURBOX;
 			break;
 		case MINUTEBOX:
-			this.boxType = BoxEnum.MINUTEBOX;
+			this.boxType = BoxType.MINUTEBOX;
 			break;
 		}
 	}
@@ -38,6 +35,7 @@ public class CustomTextBox extends TextBox{
 		if(boxValidationHandlerReg == null)
 		switch(boxType){
 		case PHONEBOX:
+				String toValidate = this.getText();
 				boxValidationHandlerReg = this.addKeyUpHandler(new KeyUpPhoneValidationHandler());
 			break;
 		case DAYBOX:

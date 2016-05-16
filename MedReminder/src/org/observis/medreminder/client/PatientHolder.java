@@ -36,7 +36,7 @@ public class PatientHolder extends HorizontalPanel {
 	private Button removePatient = new Button("Remove");
 	private VerticalPanel individualPanel = new VerticalPanel();
 	private Button createCustomMessage = new Button("Add");
-	private TextBox phoneBox = new TextBox();
+	private CustomTextBox phoneBox = new CustomTextBox(BoxType.PHONEBOX);
 	private TextBox patientNameBox = new TextBox();
 	private TextBox messageTitleBox = new TextBox();
 	private TextArea messageTextArea = new TextArea();
@@ -415,16 +415,15 @@ public class PatientHolder extends HorizontalPanel {
 				addPatientBox.hide();
 				phoneBox.setText("+358");
 				patientNameBox.setText("");
+				phoneBox.removeValidationHandler();
 			}
 		});
 		addClick.addClickHandler(new ClickHandler() {
-
+			
 			@Override
 			public void onClick(ClickEvent event) {
 				if (FieldVerifier.isValidPhone(phoneBox.getText())) {
-				if (phoneBoxHandlerReg!= null){
-				phoneBoxHandlerReg.removeHandler();
-				phoneBoxHandlerReg = null;}
+					phoneBox.removeValidationHandler();
 					comService.addPatient(patientNameBox.getText(), phoneBox.getText(), new AsyncCallback<String>() {
 
 						@Override
@@ -438,26 +437,12 @@ public class PatientHolder extends HorizontalPanel {
 						}
 
 					});
+					
 					addPatientBox.hide();
 					phoneBox.setText("+358");
 					patientNameBox.setText("");
 				} else{
-					if(phoneBoxHandlerReg == null){
-						phoneBox.setStyleName("error-validation");
-					/*	phoneBoxHandlerReg = phoneBox.addKeyUpHandler(new KeyUpHandler(){
-							@Override
-							public void onKeyUp(KeyUpEvent event) {
-								// TODO Auto-generated method stub
-								if (FieldVerifier.isValidPhone(phoneBox.getText())) {
-									phoneBox.setStyleName("gwt-textBox");
-								}else{
-									phoneBox.setStyleName("error-validation");
-								}
-							}
-							
-						}); */
-						phoneBoxHandlerReg = phoneBox.addKeyUpHandler(new KeyUpPhoneValidationHandler());
-						}
+					phoneBox.addValidationHandler();
 				}
 			}
 
