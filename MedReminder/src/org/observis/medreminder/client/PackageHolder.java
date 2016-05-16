@@ -268,7 +268,9 @@ public class PackageHolder extends HorizontalPanel {
 						// replace text logic
 						String text = msg.text;
 						//
-						TextBox box = new TextBox();
+						TextArea box = new TextArea();
+						box.setCharacterWidth(22);
+					    box.setVisibleLines(5);
 						box.setText(text);
 						box.setAlignment(TextAlignment.JUSTIFY);
 						String[] time = msg.time.split(":");

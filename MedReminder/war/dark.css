@@ -417,9 +417,11 @@ a, a:visited, a:hover {
 }
 
 .gwt-Label {
-	width: 230px;
+	width: 120px;
 }
-
+.error-validation{
+	background-color:red;
+}
 .gwt-ListBox {
 	float: left;
 	border-radius: 3px;
@@ -1063,6 +1065,7 @@ a, a:visited, a:hover {
 .gwt-TextArea {
 	border-radius: 3px;
 	-webkit-appearance: caret;
+	resize: none;
 }
 
 .gwt-TextArea-readonly {
@@ -1072,6 +1075,8 @@ a, a:visited, a:hover {
 .gwt-TextBox {
 	border-radius: 3px;
 	-webkit-appearance: caret
+	
+	
 }
 
 .gwt-TextBox-readonly {

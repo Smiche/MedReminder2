@@ -12,6 +12,10 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.Window;
@@ -43,7 +47,7 @@ public class PatientHolder extends HorizontalPanel {
 	private TextBox messageHourBox = new TextBox();
 	private TextBox messageMinuteBox = new TextBox();
 	private TextBox messageDayBox = new TextBox();
-	private TextBox deliveryTextBox = new TextBox();
+	private TextArea deliveryTextArea = new TextArea();
 	private TextBox deliveryDateBox = new TextBox();
 	private TextBox deliveryTimeBox = new TextBox();
 
@@ -70,6 +74,7 @@ public class PatientHolder extends HorizontalPanel {
 	private String selectedDelivery = "";
 
 	private HandlerRegistration closeDialogHandlerReg;
+	private HandlerRegistration phoneBoxHandlerReg;
 	private Button removeAllDeliveries = new Button("Remove all");
 
 	public PatientHolder() {
@@ -273,7 +278,9 @@ public class PatientHolder extends HorizontalPanel {
 
 		deliveryDateBox.setText(cur.date);
 		deliveryTimeBox.setText(cur.time);
-		deliveryTextBox.setText(cur.text);
+		deliveryTextArea.setText(cur.text);
+		deliveryTextArea.setCharacterWidth(22);
+	    deliveryTextArea.setVisibleLines(5);
 
 		dialogVPanel.addStyleName("dialogVPanel");
 		dialogVPanel.add(new HTML("Date <i>(i.e. 11-01-2016)</i>:"));
@@ -281,7 +288,7 @@ public class PatientHolder extends HorizontalPanel {
 		dialogVPanel.add(new HTML("Time <i>(i.e. 11:20)</i>:"));
 		dialogVPanel.add(deliveryTimeBox);
 		dialogVPanel.add(new HTML("Text:"));
-		dialogVPanel.add(deliveryTextBox);
+		dialogVPanel.add(deliveryTextArea);
 
 		HorizontalPanel buttonPan = new HorizontalPanel();
 		buttonPan.setStyleName("buttonPanel");
@@ -299,7 +306,7 @@ public class PatientHolder extends HorizontalPanel {
 				editDeliveryBox.hide();
 				deliveryDateBox.setText("");
 				deliveryTimeBox.setText("");
-				deliveryTextBox.setText("");
+				deliveryTextArea.setText("");
 				deliveriesSelectionModel.setSelected(selectedDelivery, false);
 			}
 		});
@@ -329,7 +336,7 @@ public class PatientHolder extends HorizontalPanel {
 				editDeliveryBox.hide();
 				deliveryDateBox.setText("");
 				deliveryTimeBox.setText("");
-				deliveryTextBox.setText("");
+				deliveryTextArea.setText("");
 			}
 
 		});
@@ -340,7 +347,7 @@ public class PatientHolder extends HorizontalPanel {
 			public void onClick(ClickEvent event) {
 				
 				if (FieldVerifier.isValidDate(deliveryDateBox.getText())
-						&& FieldVerifier.isValidText(deliveryTextBox.getText())
+						&& FieldVerifier.isValidText(deliveryTextArea.getText())
 						&& FieldVerifier.isValidTime(deliveryTimeBox.getText())) {
 
 					// on validation:
@@ -351,7 +358,7 @@ public class PatientHolder extends HorizontalPanel {
 						}
 					}
 
-					Delivery changedDelivery = new Delivery(selectedPatient, deliveryTextBox.getText(),
+					Delivery changedDelivery = new Delivery(selectedPatient, deliveryTextArea.getText(),
 							deliveryDateBox.getText(), deliveryTimeBox.getText(), "0");
 					if (toEdit != null)
 						comService.editDelivery(toEdit, changedDelivery, new AsyncCallback<Void>() {
@@ -370,7 +377,7 @@ public class PatientHolder extends HorizontalPanel {
 					editDeliveryBox.hide();
 					deliveryDateBox.setText("");
 					deliveryTimeBox.setText("");
-					deliveryTextBox.setText("");
+					deliveryTextArea.setText("");
 
 					// end of succesfull validation
 				} 
@@ -405,6 +412,8 @@ public class PatientHolder extends HorizontalPanel {
 		addPatientBox.setWidget(dialogVPanel);
 		addPatientBox.center();
 		// Add a handler to close the DialogBox
+
+		
 		closeButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				addPatientBox.hide();
@@ -417,7 +426,9 @@ public class PatientHolder extends HorizontalPanel {
 			@Override
 			public void onClick(ClickEvent event) {
 				if (FieldVerifier.isValidPhone(phoneBox.getText())) {
-
+				if (phoneBoxHandlerReg!= null){
+				phoneBoxHandlerReg.removeHandler();
+				phoneBoxHandlerReg = null;}
 					comService.addPatient(patientNameBox.getText(), phoneBox.getText(), new AsyncCallback<String>() {
 
 						@Override
@@ -434,7 +445,23 @@ public class PatientHolder extends HorizontalPanel {
 					addPatientBox.hide();
 					phoneBox.setText("+358");
 					patientNameBox.setText("");
-				} 
+				} else{
+					if(phoneBoxHandlerReg == null){
+						phoneBox.setStyleName("error-validation");
+						phoneBoxHandlerReg = phoneBox.addKeyUpHandler(new KeyUpHandler(){
+							@Override
+							public void onKeyUp(KeyUpEvent event) {
+								// TODO Auto-generated method stub
+								if (FieldVerifier.isValidPhone(phoneBox.getText())) {
+									phoneBox.setStyleName("gwt-textBox");
+								}else{
+									phoneBox.setStyleName("error-validation");
+								}
+							}
+							
+						});
+						}
+				}
 			}
 
 		});
@@ -656,8 +683,11 @@ public class PatientHolder extends HorizontalPanel {
 					// replace text logic
 					String text = msg.text;
 					// .replaceAll("[value]", "");
-					TextBox box = new TextBox();
+					TextArea box = new TextArea();
 					box.setText(text);
+					box.setCharacterWidth(22);
+				    box.setVisibleLines(5);
+				 
 					// box.setAlignment(TextAlignment.JUSTIFY);
 					String[] time = msg.time.split(":");
 
