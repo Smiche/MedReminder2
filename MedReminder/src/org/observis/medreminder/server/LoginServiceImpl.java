@@ -20,7 +20,8 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 	
 	@Override
 	public String logIn(String username, String password) throws IllegalArgumentException {
-		if (DatabaseConnector.checkLogin(username, password)){
+		DataBaseConnection dbCon = new DataBaseConnection();
+		if (dbCon.checkLogin(username, password)){
 			UUID sessionID = UUID.randomUUID();
 	        HttpServletRequest httpServletRequest = this.getThreadLocalRequest();
 	        HttpSession session = httpServletRequest.getSession(true);

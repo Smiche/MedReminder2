@@ -48,13 +48,14 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 	public String addPatient(String name, String phone)
 			throws IllegalArgumentException {
 		if(!isLegalUser())return "";
+		DataBaseConnection dbCon = new DataBaseConnection();
 		if(!FieldVerifier.isValidPhone(phone) && name!=null && name.length()<200 )return "";
 		HttpServletRequest httpServletRequest = this.getThreadLocalRequest();
 		HttpSession session = httpServletRequest.getSession(true);
 		String username = (String) session.getAttribute("user");
 		System.out.println("Username attempting to add: " + username);
 		// TODO Auto-generated method stub
-		DatabaseConnector.addPatientRecord(name, phone, username);
+		dbCon.addPatientRecord(name, phone, username);
 		//
 
 		return "Patient added:" + name + phone + username;
@@ -63,13 +64,14 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public String getPatients() throws IllegalArgumentException {
 		if(!isLegalUser())return "";
+		DataBaseConnection dbCon = new DataBaseConnection();
 		HttpServletRequest httpServletRequest = this.getThreadLocalRequest();
 		HttpSession session = httpServletRequest.getSession(true);
 		String doctorName = (String) session.getAttribute("user");
 		//
 		// get all patients from doctor id
 		//
-		return DatabaseConnector.returnPatient(doctorName);
+		return dbCon.returnPatient(doctorName);
 	}
 
 	@Override
@@ -78,8 +80,9 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 			throws IllegalArgumentException {
 		if(!isLegalUser()) return null;
 		if(!FieldVerifier.isValidText(description))return null;
+		DataBaseConnection dbCon = new DataBaseConnection();
 		// array list to return all messages
-		return DatabaseConnector.getSinglePackage(description);
+		return dbCon.getSinglePackage(description);
 		// hook to db connector
 
 		// return in format:
@@ -94,11 +97,11 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public String getPackagesList() throws IllegalArgumentException {
 		if(!isLegalUser())return "";
-
+		DataBaseConnection dbCon = new DataBaseConnection();
 		// need to change to getPackagesList
 		// return DatabaseConnector.getTemplatesList();
 		//
-		return DatabaseConnector.getPackagesDB();
+		return dbCon.getPackagesDB();
 	}
 
 	@Override
@@ -110,13 +113,13 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 				return "";
 			}
 		}
-		
+		DataBaseConnection dbCon = new DataBaseConnection();
 		// TODO Auto-generated method stub
 		System.out.println("Array size: "+messages.size());
 		int success = 0;
 		for(Message m:messages){
 			System.out.println("inserting message info: "+m.title+" phone is:"+patientPhone);
-			DatabaseConnector.insertSchedule(m, patientPhone);
+			dbCon.insertSchedule(m, patientPhone);
 			success++;
 		}
 		// scheduling logic from the arraylist
@@ -126,8 +129,9 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public void addPackage(String name) throws IllegalArgumentException {
 		if(!isLegalUser())return;
+		DataBaseConnection dbCon = new DataBaseConnection();
 		// add a new package to the database with that title ->name
-		DatabaseConnector.addPackagetoDB(name);
+		dbCon.addPackagetoDB(name);
 		
 	}
 
@@ -136,7 +140,8 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 			throws IllegalArgumentException {
 		if(!isLegalUser())return;
 		if(!FieldVerifier.isValidMessage(msg) || !FieldVerifier.isValidText(packageName))return;
-		DatabaseConnector.addMessagetoDB(msg, packageName);
+		DataBaseConnection dbCon = new DataBaseConnection();
+		dbCon.addMessagetoDB(msg, packageName);
 		//add a new message to table messages
 		//use packageName to get foreign  package_id
 		
@@ -147,7 +152,8 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 			throws IllegalArgumentException {
 		if(!isLegalUser())return;
 		if(!FieldVerifier.isValidText(title) || !FieldVerifier.isValidText(text))return;
-		DatabaseConnector.removeMessageDB(title, text);
+		DataBaseConnection dbCon = new DataBaseConnection();
+		dbCon.removeMessageDB(title, text);
 		// TODO Auto-generated method stub
 		
 	}
@@ -157,7 +163,8 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 		if(!isLegalUser())return;
 		if(!FieldVerifier.isValidText(title))return;
 		// TODO Auto-generated method stub 
-		DatabaseConnector.removePackageDB(title);
+		DataBaseConnection dbCon = new DataBaseConnection();
+		dbCon.removePackageDB(title);
 		
 	}
 
@@ -167,7 +174,8 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 		if(!isLegalUser())return null;
 		if(!FieldVerifier.isValidPhone(phone))return null;
 		// TODO Auto-generated method stub
-		return DatabaseConnector.returnDeliveryDB(phone);
+		DataBaseConnection dbCon = new DataBaseConnection();
+		return dbCon.returnDeliveryDB(phone);
 	}
 
 	@Override
@@ -175,7 +183,8 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 		if(!isLegalUser())return;
 		if(!FieldVerifier.isValidPhone(phone))return;
 		// TODO Auto-generated method stub
-		DatabaseConnector.removePatientDB(phone);
+		DataBaseConnection dbCon = new DataBaseConnection();
+		dbCon.removePatientDB(phone);
 		
 	}
 
@@ -184,7 +193,8 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 			throws IllegalArgumentException {
 		if(!isLegalUser())return;
 		if(!FieldVerifier.isValidDelivery(chosenDelivery))return;
-		DatabaseConnector.removeDeliveryDB(chosenDelivery);
+		DataBaseConnection dbCon = new DataBaseConnection();
+		dbCon.removeDeliveryDB(chosenDelivery);
 		// use chosenDelivery.date and chosenDelivery.time to select the delivery that needs to be removed
 		
 	}
@@ -195,7 +205,8 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 		if(!isLegalUser())return;
 		if(!FieldVerifier.isValidDelivery(delivery) || !FieldVerifier.isValidPhone(phone))return;
 		// delivery.date delivery.text delivery.time and get patient id with phone
-		DatabaseConnector.addDeliveryDB(delivery, phone);
+		DataBaseConnection dbCon = new DataBaseConnection();
+		dbCon.addDeliveryDB(delivery, phone);
 	}
 
 	@Override
@@ -203,7 +214,8 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 			throws IllegalArgumentException {
 		if(!isLegalUser())return;
 		if(!FieldVerifier.isValidDelivery(oldDelivery) || !FieldVerifier.isValidDelivery(changedDelivery))return;
-		DatabaseConnector.updateDeliveryDB(oldDelivery, changedDelivery);
+		DataBaseConnection dbCon = new DataBaseConnection();
+		dbCon.updateDeliveryDB(oldDelivery, changedDelivery);
 		// find old delivery with oldDelivery.time and oldDelivery.date and change all field values that u get from changedDelivery
 		
 	}
@@ -213,7 +225,8 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 			throws IllegalArgumentException {
 		if(!isLegalUser())return;
 		if(!FieldVerifier.isValidPhone(phone))return;
-		DatabaseConnector.removeAllDeliveryDB(phone);		
+		DataBaseConnection dbCon = new DataBaseConnection();
+		dbCon.removeAllDeliveryDB(phone);		
 	}
 
 }
