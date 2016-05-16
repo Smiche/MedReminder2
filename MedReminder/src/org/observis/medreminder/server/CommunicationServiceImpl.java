@@ -48,11 +48,11 @@ public class CommunicationServiceImpl extends RemoteServiceServlet implements
 	public String addPatient(String name, String phone)
 			throws IllegalArgumentException {
 		if(!isLegalUser())return "";
-		if(!FieldVerifier.isValidPhone(phone) || !FieldVerifier.isValidText(name))return "";
+		if(!FieldVerifier.isValidPhone(phone) && name!=null && name.length()<200 )return "";
 		HttpServletRequest httpServletRequest = this.getThreadLocalRequest();
 		HttpSession session = httpServletRequest.getSession(true);
 		String username = (String) session.getAttribute("user");
-		System.out.println("Username attempint to add:" + username);
+		System.out.println("Username attempting to add: " + username);
 		// TODO Auto-generated method stub
 		DatabaseConnector.addPatientRecord(name, phone, username);
 		//
