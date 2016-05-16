@@ -19,6 +19,15 @@ public class KeyUpTextValidationHandler implements KeyUpHandler{
 						.setStyleName("error-validation");
 			}
 		}
+		if (event.getSource() instanceof CustomTextArea) {
+			CustomTextArea cur = (CustomTextArea) event.getSource();
+			if (FieldVerifier.isValidText(cur.getText())) {
+				((CustomTextArea) event.getSource()).setStyleName("gwt-TextBox");
+			} else {
+				((CustomTextArea) event.getSource())
+						.setStyleName("error-validation");
+			}
+		}
 	}
 
 }
