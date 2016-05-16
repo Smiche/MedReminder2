@@ -22,6 +22,7 @@ public class DatabaseConnector {
 	// Database credentials
 	static final String USER = "root";
 	static final String PASS = "rootroot";
+	
 
 	public static void openConnection() { // opens connection to the server
 		try {
