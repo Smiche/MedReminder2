@@ -35,14 +35,30 @@ public class CustomTextBox extends TextBox{
 	}
 	
 	void addValidationHandler(){
-		
-		if(boxValidationHandlerReg == null){
-			boxValidationHandlerReg = this.addKeyUpHandler(new KeyUpPhoneValidationHandler());
+		if(boxValidationHandlerReg == null)
+		switch(boxType){
+		case PHONEBOX:
+				boxValidationHandlerReg = this.addKeyUpHandler(new KeyUpPhoneValidationHandler());
+			break;
+		case DAYBOX:
+			boxValidationHandlerReg = this.addKeyUpHandler(new KeyUpDayValidationHandler());
+			break;
+		case TEXTBOX:
+			boxValidationHandlerReg = this.addKeyUpHandler(new KeyUpTextValidationHandler());
+			break;
+		case TITLEBOX:
+			boxValidationHandlerReg = this.addKeyUpHandler(new KeyUpTextValidationHandler());
+			break;
+		case HOURBOX:
+			boxValidationHandlerReg = this.addKeyUpHandler(new KeyUpHourValidationHandler());
+			break;
+		case MINUTEBOX:
+			boxValidationHandlerReg = this.addKeyUpHandler(new KeyUpMinuteValidationHandler());
+			break;
 		}
 	}
 	
 	void removeValidationHandler(){
-		
 		if(boxValidationHandlerReg!=null){
 			boxValidationHandlerReg.removeHandler();
 			boxValidationHandlerReg = null;
