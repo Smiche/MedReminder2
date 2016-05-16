@@ -448,7 +448,7 @@ public class PatientHolder extends HorizontalPanel {
 				} else{
 					if(phoneBoxHandlerReg == null){
 						phoneBox.setStyleName("error-validation");
-						phoneBoxHandlerReg = phoneBox.addKeyUpHandler(new KeyUpHandler(){
+					/*	phoneBoxHandlerReg = phoneBox.addKeyUpHandler(new KeyUpHandler(){
 							@Override
 							public void onKeyUp(KeyUpEvent event) {
 								// TODO Auto-generated method stub
@@ -459,7 +459,8 @@ public class PatientHolder extends HorizontalPanel {
 								}
 							}
 							
-						});
+						}); */
+						phoneBoxHandlerReg = phoneBox.addKeyUpHandler(new KeyUpPhoneValidationHandler());
 						}
 				}
 			}
