@@ -72,6 +72,26 @@ public class PatientHolder extends HorizontalPanel {
 	private Button removeAllDeliveries = new Button("Remove all");
 
 	public PatientHolder() {
+		removeAllDeliveries.addClickHandler(new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+				comService.removeAllDeliveries(selectedPatient, new AsyncCallback<Void>(){
+
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("Unable to remove all deliveries");									
+					}
+
+					@Override
+					public void onSuccess(Void result) {
+						updatePatientDeliveries();
+					}
+					
+				});
+			}					
+		});
+		
 		patientsPanel.setStyleName("patientsPanel");
 		individualPanel.setStyleName("individualPanel");
 		deliveriesPanel.setStyleName("deliveriesPanel");
@@ -165,26 +185,6 @@ public class PatientHolder extends HorizontalPanel {
 					// Window.alert("Size:"+patients.size());
 					deliveriesCellList.setRowCount(deliveriesTitle.size(), true);
 					deliveriesCellList.setRowData(0, deliveriesTitle);
-					
-					removeAllDeliveries.addClickHandler(new ClickHandler(){
-
-						@Override
-						public void onClick(ClickEvent event) {
-							comService.removeAllDeliveries(selectedPatient, new AsyncCallback<Void>(){
-
-								@Override
-								public void onFailure(Throwable caught) {
-									Window.alert("Unable to remove all deliveries");									
-								}
-
-								@Override
-								public void onSuccess(Void result) {
-									updatePatientDeliveries();
-								}
-								
-							});
-						}					
-					});
 					
 					// patientsPanel = new VerticalPanel();
 					deliveriesPanel.add(deliveriesCellList);
