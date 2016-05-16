@@ -30,7 +30,7 @@ public class PackageHolder extends HorizontalPanel {
 	private final CommunicationServiceAsync comService = GWT.create(CommunicationService.class);
 	private Button createMessage = new Button("Add");
 	private TextBox packageNameBox = new TextBox();
-
+	
 	private TextBox messageTitleBox = new TextBox();
 	private TextArea messageTextArea = new TextArea();
 	private TextBox messageHourBox = new TextBox();
